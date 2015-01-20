@@ -1,0 +1,10 @@
+#! /bin/bash
+
+JARS=`echo \`find sso-lib -name '*.jar'\` | perl -pe 's/\s+/:/g';`
+JARS=cabrillo-vsphere-cli.jar:./antlr/antlr-4.4-complete.jar:${JARS}
+
+(cd bin; jar -cf ../cabrillo-vsphere-cli.jar *)
+
+#java -cp $JARS com.vmware.common.Main "$@" 2>/dev/nul
+java -cp $JARS edu.cabrillo.vmware.Main "$@" 
+
