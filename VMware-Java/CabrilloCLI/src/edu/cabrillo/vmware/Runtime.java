@@ -215,8 +215,8 @@ public class Runtime extends CLIBaseListener {
 
 	@Override
 	public void exitMkdir(@NotNull MkdirContext ctx) {
-		ManagedObjectReference parent = ((VRL) programStack.pop()).popMOR();
 		String name = (String) programStack.pop();
+		ManagedObjectReference parent = ((VRL) programStack.pop()).popMOR();
 		try {
 			Actions.mkdir(parent, name);
 		} catch (SOAPFaultException | InvalidPropertyFaultMsg | RuntimeFaultFaultMsg

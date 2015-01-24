@@ -64,19 +64,23 @@ import edu.cabrillo.vmware.Path.PathNotFoundException;
 
 public class Actions {
 
-	private static void waitForTask(ManagedObjectReference task) throws InvalidPropertyFaultMsg, RuntimeFaultFaultMsg, InvalidCollectorVersionFaultMsg {
+	private static void waitForTask(ManagedObjectReference task) throws RuntimeFaultFaultMsg, InvalidCollectorVersionFaultMsg {
 		WaitForValues waiter = new WaitForValues();
 
 		// info has a property - state for state of the task
-		Object[] result = waiter.wait(task, new String[]{"info.state", "info.error"},
-				new String[]{"state"}, new Object[][]{new Object[]{
-						TaskInfoState.SUCCESS, TaskInfoState.ERROR}});
-
-		if (result[0].equals(TaskInfoState.SUCCESS)) {
-			return;
-		}
-		if (result[1] instanceof LocalizedMethodFault) {
-			throw new RuntimeException(((LocalizedMethodFault) result[1]).getLocalizedMessage());
+		Object[] result;
+		try {
+			result = waiter.wait(task, new String[]{"info.state", "info.error"},
+					new String[]{"state"}, new Object[][]{new Object[]{
+							TaskInfoState.SUCCESS, TaskInfoState.ERROR}});
+			if (result[0].equals(TaskInfoState.SUCCESS)) {
+				return;
+			}
+			if (result[1] instanceof LocalizedMethodFault) {
+				throw new RuntimeException(((LocalizedMethodFault) result[1]).getLocalizedMessage());
+			}
+		} catch (InvalidPropertyFaultMsg e) {
+			System.out.println("BUG: InvalidPropertyFaultMsg thrown. Why?");
 		}
 
 		throw new RuntimeException("Action did not succeed.");
@@ -278,7 +282,7 @@ public class Actions {
 		vmConfigSpec.getDeviceChange().addAll(nicSpecArray);
 		waitForTask(ses.getVimPort().reconfigVMTask(vm, vmConfigSpec));
 	}
-	
+
 	public static void addNetwork(ManagedObjectReference vm, String connection) throws InvalidPropertyFaultMsg, RuntimeFaultFaultMsg, ConcurrentAccessFaultMsg, DuplicateNameFaultMsg, FileFaultFaultMsg, InsufficientResourcesFaultFaultMsg, InvalidDatastoreFaultMsg, InvalidNameFaultMsg, InvalidStateFaultMsg, TaskInProgressFaultMsg, VmConfigFaultFaultMsg, InvalidCollectorVersionFaultMsg {
 		SSOSession ses = SSOSession.get();
 		VirtualDeviceConfigSpec nicSpec = new VirtualDeviceConfigSpec();
