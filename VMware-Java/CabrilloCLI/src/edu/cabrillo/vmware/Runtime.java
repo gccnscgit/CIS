@@ -1,6 +1,5 @@
 package edu.cabrillo.vmware;
 
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.Stack;
 
@@ -32,7 +31,6 @@ import com.vmware.vim25.NotFoundFaultMsg;
 import com.vmware.vim25.ResourceInUseFaultMsg;
 import com.vmware.vim25.RuntimeFaultFaultMsg;
 import com.vmware.vim25.TaskInProgressFaultMsg;
-import com.vmware.vim25.VimFaultFaultMsg;
 import com.vmware.vim25.VmConfigFaultFaultMsg;
 
 import edu.cabrillo.vmware.Path.PathNotFoundException;

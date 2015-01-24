@@ -1,10 +1,7 @@
 package edu.cabrillo.vmware;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 
 import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -92,9 +89,7 @@ public class Main {
 			username = System.console().readLine("login: ");
 		}
 
-		// XXX: For debugging only. 
-		String password = "MMCabri11o";
-		//String password = null;
+		String password = null;
 		if (password == null) {
 			password = String.valueOf(System.console().readPassword("password: "));
 		}
