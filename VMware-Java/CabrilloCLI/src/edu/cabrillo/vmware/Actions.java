@@ -81,6 +81,7 @@ public class Actions {
 			}
 		} catch (InvalidPropertyFaultMsg e) {
 			System.out.println("BUG: InvalidPropertyFaultMsg thrown. Why?");
+			return;
 		}
 
 		throw new RuntimeException("Action did not succeed.");
