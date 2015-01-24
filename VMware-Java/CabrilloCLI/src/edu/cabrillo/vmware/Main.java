@@ -113,6 +113,8 @@ public class Main {
 							exec(ctx);
 						} catch (RecognitionException e) {
 							System.out.println("Parse error.");
+						} catch (Throwable e) {
+							System.out.println("Error: " + e.getMessage());
 						}
 					}
 				} catch (IOException e) {
