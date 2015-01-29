@@ -23,6 +23,7 @@ command
 	| addnet
 	| modnet
 	| delnet
+	| migrate
 	;
 
 linkedclone : 'linkedclone' vrl vrl ; 
@@ -34,12 +35,13 @@ create      : 'create' vrl ;
 addnet		: 'addnet' vrl STRING ; 
 modnet		: 'modnet' vrl STRING ; 
 delnet		: 'delnet' vrl STRING ; 
+migrate		: 'migrate' vrl vrl ; 
 
 vrl: RTYPE ':/' PATH ; 
 
 STRING : '"' (~["] | '\\' '"')* '"' ; 
 
-RTYPE : 'vm' | 'folder' | 'entity' | 'snapshot' | 'portgroup' ; 
+RTYPE : 'vm' | 'folder' | 'entity' | 'snapshot' | 'portgroup' | 'datastore' ; 
 
 PATH : PATHPART+ '/'; 
 

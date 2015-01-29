@@ -14,6 +14,7 @@ import com.vmware.vim25.ArrayOfManagedObjectReference;
 import com.vmware.vim25.ArrayOfVirtualDevice;
 import com.vmware.vim25.ConcurrentAccessFaultMsg;
 import com.vmware.vim25.CustomizationFaultFaultMsg;
+import com.vmware.vim25.DatastoreSummary;
 import com.vmware.vim25.DuplicateNameFaultMsg;
 import com.vmware.vim25.FileFaultFaultMsg;
 import com.vmware.vim25.HostConfigFaultFaultMsg;
@@ -33,10 +34,15 @@ import com.vmware.vim25.LocalizedMethodFault;
 import com.vmware.vim25.ManagedObjectReference;
 import com.vmware.vim25.MigrationFaultFaultMsg;
 import com.vmware.vim25.NotFoundFaultMsg;
+import com.vmware.vim25.ObjectSpec;
+import com.vmware.vim25.PropertySpec;
 import com.vmware.vim25.ResourceInUseFaultMsg;
 import com.vmware.vim25.RuntimeFaultFaultMsg;
+import com.vmware.vim25.SelectionSpec;
 import com.vmware.vim25.TaskInProgressFaultMsg;
 import com.vmware.vim25.TaskInfoState;
+import com.vmware.vim25.TimedoutFaultMsg;
+import com.vmware.vim25.TraversalSpec;
 import com.vmware.vim25.VimFaultFaultMsg;
 import com.vmware.vim25.VirtualDevice;
 import com.vmware.vim25.VirtualDeviceConfigSpec;
@@ -52,6 +58,7 @@ import com.vmware.vim25.VirtualEthernetCardNetworkBackingInfo;
 import com.vmware.vim25.VirtualHardware;
 import com.vmware.vim25.VirtualMachineCloneSpec;
 import com.vmware.vim25.VirtualMachineConfigSpec;
+import com.vmware.vim25.VirtualMachineMovePriority;
 import com.vmware.vim25.VirtualMachineRelocateDiskMoveOptions;
 import com.vmware.vim25.VirtualMachineRelocateSpec;
 import com.vmware.vim25.VirtualMachineRelocateSpecDiskLocator;
@@ -183,7 +190,7 @@ public class Actions {
 			rSpec.setDiskMoveType(VirtualMachineRelocateDiskMoveOptions.CREATE_NEW_CHILD_DISK_BACKING.value());
 			rSpec.getDisk().addAll(diskLocator);
 		} else {
-			rSpec.setDiskMoveType(VirtualMachineRelocateDiskMoveOptions.CREATE_NEW_CHILD_DISK_BACKING.value());
+			rSpec.setDiskMoveType(VirtualMachineRelocateDiskMoveOptions.CREATE_NEW_CHILD_DISK_BACKING.value());	
 		}
 		VirtualMachineCloneSpec cloneSpec = new VirtualMachineCloneSpec();
 		cloneSpec.setPowerOn(false);
@@ -302,6 +309,14 @@ public class Actions {
 		waitForTask(ses.getVimPort().reconfigVMTask(vm, vmConfigSpec));
 	}
 
+
+	public static void migrateDS(ManagedObjectReference vm, ManagedObjectReference datastore) throws RuntimeFaultFaultMsg, InvalidCollectorVersionFaultMsg, FileFaultFaultMsg, InsufficientResourcesFaultFaultMsg, InvalidDatastoreFaultMsg, InvalidStateFaultMsg, MigrationFaultFaultMsg, TimedoutFaultMsg, VmConfigFaultFaultMsg {
+		SSOSession ses = SSOSession.get();
+		VirtualMachineRelocateSpec relSpec = new VirtualMachineRelocateSpec();
+		relSpec.setDatastore(datastore);
+		waitForTask(ses.getVimPort().relocateVMTask(vm, relSpec, VirtualMachineMovePriority.DEFAULT_PRIORITY));	
+	}
+	
 	/*
 	public static void network(String vmname) throws PathNotFoundException, RuntimeFaultFaultMsg, InvalidPropertyFaultMsg, InvalidLocaleFaultMsg, InvalidLoginFaultMsg, DatatypeConfigurationException {
 		ManagedObjectReference vm = Path.pathToVm(vmname);

@@ -28,6 +28,7 @@ Quotes are required. The following VRLs are valid:
          vm://<datacenter>/<folder...>/<vmname>/
    snapshot://<datacenter>/<folder...>/<vmname>/<snapshotname>/
   portgroup://<host>/<vswitch>/<pgname>/<vlan>/
+  datastore://<datacenter>/<datastore>/
 
 The following commands work:
 
@@ -54,6 +55,9 @@ Add a network adapter to a VM connected to the specified network:
 
 Remove a netwrork adapter from a VM with the specifed name:
     delnet <vrl:VM> <String:Adapter Name>
+
+Migrate a VM from one datastore to another on the same host:
+    migrate <vrl:VM> <vrl:Datastore>
 
 Usage:
   -h | --help   : This message

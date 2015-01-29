@@ -11,16 +11,6 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface CLIListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link CLIParser#addnet}.
-	 * @param ctx the parse tree
-	 */
-	void enterAddnet(@NotNull CLIParser.AddnetContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link CLIParser#addnet}.
-	 * @param ctx the parse tree
-	 */
-	void exitAddnet(@NotNull CLIParser.AddnetContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link CLIParser#delnet}.
 	 * @param ctx the parse tree
 	 */
@@ -30,16 +20,6 @@ public interface CLIListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitDelnet(@NotNull CLIParser.DelnetContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link CLIParser#file}.
-	 * @param ctx the parse tree
-	 */
-	void enterFile(@NotNull CLIParser.FileContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link CLIParser#file}.
-	 * @param ctx the parse tree
-	 */
-	void exitFile(@NotNull CLIParser.FileContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CLIParser#rename}.
 	 * @param ctx the parse tree
@@ -51,25 +31,15 @@ public interface CLIListener extends ParseTreeListener {
 	 */
 	void exitRename(@NotNull CLIParser.RenameContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CLIParser#delete}.
+	 * Enter a parse tree produced by {@link CLIParser#migrate}.
 	 * @param ctx the parse tree
 	 */
-	void enterDelete(@NotNull CLIParser.DeleteContext ctx);
+	void enterMigrate(@NotNull CLIParser.MigrateContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CLIParser#delete}.
+	 * Exit a parse tree produced by {@link CLIParser#migrate}.
 	 * @param ctx the parse tree
 	 */
-	void exitDelete(@NotNull CLIParser.DeleteContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link CLIParser#command}.
-	 * @param ctx the parse tree
-	 */
-	void enterCommand(@NotNull CLIParser.CommandContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link CLIParser#command}.
-	 * @param ctx the parse tree
-	 */
-	void exitCommand(@NotNull CLIParser.CommandContext ctx);
+	void exitMigrate(@NotNull CLIParser.MigrateContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CLIParser#line}.
 	 * @param ctx the parse tree
@@ -111,15 +81,55 @@ public interface CLIListener extends ParseTreeListener {
 	 */
 	void exitCreate(@NotNull CLIParser.CreateContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CLIParser#modnet}.
+	 * Enter a parse tree produced by {@link CLIParser#addnet}.
 	 * @param ctx the parse tree
 	 */
-	void enterModnet(@NotNull CLIParser.ModnetContext ctx);
+	void enterAddnet(@NotNull CLIParser.AddnetContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CLIParser#modnet}.
+	 * Exit a parse tree produced by {@link CLIParser#addnet}.
 	 * @param ctx the parse tree
 	 */
-	void exitModnet(@NotNull CLIParser.ModnetContext ctx);
+	void exitAddnet(@NotNull CLIParser.AddnetContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CLIParser#file}.
+	 * @param ctx the parse tree
+	 */
+	void enterFile(@NotNull CLIParser.FileContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CLIParser#file}.
+	 * @param ctx the parse tree
+	 */
+	void exitFile(@NotNull CLIParser.FileContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CLIParser#command}.
+	 * @param ctx the parse tree
+	 */
+	void enterCommand(@NotNull CLIParser.CommandContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CLIParser#command}.
+	 * @param ctx the parse tree
+	 */
+	void exitCommand(@NotNull CLIParser.CommandContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CLIParser#delete}.
+	 * @param ctx the parse tree
+	 */
+	void enterDelete(@NotNull CLIParser.DeleteContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CLIParser#delete}.
+	 * @param ctx the parse tree
+	 */
+	void exitDelete(@NotNull CLIParser.DeleteContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CLIParser#linkedclone}.
+	 * @param ctx the parse tree
+	 */
+	void enterLinkedclone(@NotNull CLIParser.LinkedcloneContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CLIParser#linkedclone}.
+	 * @param ctx the parse tree
+	 */
+	void exitLinkedclone(@NotNull CLIParser.LinkedcloneContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CLIParser#move}.
 	 * @param ctx the parse tree
@@ -131,13 +141,13 @@ public interface CLIListener extends ParseTreeListener {
 	 */
 	void exitMove(@NotNull CLIParser.MoveContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CLIParser#linkedclone}.
+	 * Enter a parse tree produced by {@link CLIParser#modnet}.
 	 * @param ctx the parse tree
 	 */
-	void enterLinkedclone(@NotNull CLIParser.LinkedcloneContext ctx);
+	void enterModnet(@NotNull CLIParser.ModnetContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CLIParser#linkedclone}.
+	 * Exit a parse tree produced by {@link CLIParser#modnet}.
 	 * @param ctx the parse tree
 	 */
-	void exitLinkedclone(@NotNull CLIParser.LinkedcloneContext ctx);
+	void exitModnet(@NotNull CLIParser.ModnetContext ctx);
 }

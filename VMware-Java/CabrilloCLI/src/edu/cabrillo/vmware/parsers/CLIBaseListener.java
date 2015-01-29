@@ -19,18 +19,6 @@ public class CLIBaseListener implements CLIListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAddnet(@NotNull CLIParser.AddnetContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAddnet(@NotNull CLIParser.AddnetContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterDelnet(@NotNull CLIParser.DelnetContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -38,18 +26,6 @@ public class CLIBaseListener implements CLIListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitDelnet(@NotNull CLIParser.DelnetContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterFile(@NotNull CLIParser.FileContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitFile(@NotNull CLIParser.FileContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -67,25 +43,13 @@ public class CLIBaseListener implements CLIListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDelete(@NotNull CLIParser.DeleteContext ctx) { }
+	@Override public void enterMigrate(@NotNull CLIParser.MigrateContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDelete(@NotNull CLIParser.DeleteContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterCommand(@NotNull CLIParser.CommandContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitCommand(@NotNull CLIParser.CommandContext ctx) { }
+	@Override public void exitMigrate(@NotNull CLIParser.MigrateContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -139,13 +103,61 @@ public class CLIBaseListener implements CLIListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterModnet(@NotNull CLIParser.ModnetContext ctx) { }
+	@Override public void enterAddnet(@NotNull CLIParser.AddnetContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitModnet(@NotNull CLIParser.ModnetContext ctx) { }
+	@Override public void exitAddnet(@NotNull CLIParser.AddnetContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFile(@NotNull CLIParser.FileContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFile(@NotNull CLIParser.FileContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCommand(@NotNull CLIParser.CommandContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCommand(@NotNull CLIParser.CommandContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDelete(@NotNull CLIParser.DeleteContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDelete(@NotNull CLIParser.DeleteContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLinkedclone(@NotNull CLIParser.LinkedcloneContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLinkedclone(@NotNull CLIParser.LinkedcloneContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -163,13 +175,13 @@ public class CLIBaseListener implements CLIListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLinkedclone(@NotNull CLIParser.LinkedcloneContext ctx) { }
+	@Override public void enterModnet(@NotNull CLIParser.ModnetContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLinkedclone(@NotNull CLIParser.LinkedcloneContext ctx) { }
+	@Override public void exitModnet(@NotNull CLIParser.ModnetContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

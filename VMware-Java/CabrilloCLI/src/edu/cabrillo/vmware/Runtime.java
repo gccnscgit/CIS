@@ -31,6 +31,7 @@ import com.vmware.vim25.NotFoundFaultMsg;
 import com.vmware.vim25.ResourceInUseFaultMsg;
 import com.vmware.vim25.RuntimeFaultFaultMsg;
 import com.vmware.vim25.TaskInProgressFaultMsg;
+import com.vmware.vim25.TimedoutFaultMsg;
 import com.vmware.vim25.VmConfigFaultFaultMsg;
 
 import edu.cabrillo.vmware.Path.PathNotFoundException;
@@ -41,6 +42,7 @@ import edu.cabrillo.vmware.parsers.CLIParser.CreateContext;
 import edu.cabrillo.vmware.parsers.CLIParser.DeleteContext;
 import edu.cabrillo.vmware.parsers.CLIParser.DelnetContext;
 import edu.cabrillo.vmware.parsers.CLIParser.LinkedcloneContext;
+import edu.cabrillo.vmware.parsers.CLIParser.MigrateContext;
 import edu.cabrillo.vmware.parsers.CLIParser.MkdirContext;
 import edu.cabrillo.vmware.parsers.CLIParser.MoveContext;
 import edu.cabrillo.vmware.parsers.CLIParser.RenameContext;
@@ -53,7 +55,7 @@ public class Runtime extends CLIBaseListener {
 
 	public static class VRL { 
 		enum Type { 
-			UNKNOWN, VM, FOLDER, ENTITY, SNAPSHOT, PORTGROUP
+			UNKNOWN, VM, FOLDER, ENTITY, SNAPSHOT, PORTGROUP, DATASTORE
 		}
 		public Stack<Object> parts = new Stack<Object>();
 		public Type type = Type.UNKNOWN;
@@ -133,6 +135,10 @@ public class Runtime extends CLIBaseListener {
 				v.parts.push(path[1]);
 				v.parts.push(path[2]);
 				v.parts.push(path[3]);
+			}else if ("datastore".equals(ctx.getChild(0).toString())) {
+				v.type = VRL.Type.DATASTORE; 
+				item = findByTypeName(SSOSession.get().getServiceContent().getRootFolder(), "Datacenter", path[0]);
+				v.parts.push(findByTypeName(item, "Datastore", path[1]));
 			}
 			programStack.push(v);
 
@@ -286,5 +292,21 @@ public class Runtime extends CLIBaseListener {
 		} catch (SOAPFaultException | InvalidPropertyFaultMsg | RuntimeFaultFaultMsg | ConcurrentAccessFaultMsg | DuplicateNameFaultMsg | FileFaultFaultMsg | InsufficientResourcesFaultFaultMsg | InvalidDatastoreFaultMsg | InvalidNameFaultMsg | InvalidStateFaultMsg | TaskInProgressFaultMsg | VmConfigFaultFaultMsg | InvalidCollectorVersionFaultMsg e) {
 			throw new RuntimeException("Error during addnet", e);
 		}
+	}
+	
+	@Override
+	public void exitMigrate(@NotNull MigrateContext ctx) {
+		VRL datastore = (VRL) programStack.pop();
+		VRL vm = (VRL) programStack.pop();
+		try {
+			Actions.migrateDS(vm.popMOR(), datastore.popMOR());
+		} catch (SOAPFaultException | RuntimeFaultFaultMsg | InvalidCollectorVersionFaultMsg
+				| FileFaultFaultMsg | InsufficientResourcesFaultFaultMsg
+				| InvalidDatastoreFaultMsg | InvalidStateFaultMsg
+				| MigrationFaultFaultMsg | TimedoutFaultMsg
+				| VmConfigFaultFaultMsg e) {
+			throw new RuntimeException("Error during migrate", e);
+		}
+		
 	}
 }
