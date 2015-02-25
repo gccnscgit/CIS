@@ -91,6 +91,18 @@ public class CLIBaseListener implements CLIListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterPoweron(@NotNull CLIParser.PoweronContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPoweron(@NotNull CLIParser.PoweronContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterCreate(@NotNull CLIParser.CreateContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -122,6 +134,30 @@ public class CLIBaseListener implements CLIListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitFile(@NotNull CLIParser.FileContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterReboot(@NotNull CLIParser.RebootContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitReboot(@NotNull CLIParser.RebootContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPoweroff(@NotNull CLIParser.PoweroffContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPoweroff(@NotNull CLIParser.PoweroffContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -182,6 +218,18 @@ public class CLIBaseListener implements CLIListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitModnet(@NotNull CLIParser.ModnetContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterShutdown(@NotNull CLIParser.ShutdownContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitShutdown(@NotNull CLIParser.ShutdownContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

@@ -71,6 +71,16 @@ public interface CLIListener extends ParseTreeListener {
 	 */
 	void exitVrl(@NotNull CLIParser.VrlContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link CLIParser#poweron}.
+	 * @param ctx the parse tree
+	 */
+	void enterPoweron(@NotNull CLIParser.PoweronContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CLIParser#poweron}.
+	 * @param ctx the parse tree
+	 */
+	void exitPoweron(@NotNull CLIParser.PoweronContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link CLIParser#create}.
 	 * @param ctx the parse tree
 	 */
@@ -100,6 +110,26 @@ public interface CLIListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFile(@NotNull CLIParser.FileContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CLIParser#reboot}.
+	 * @param ctx the parse tree
+	 */
+	void enterReboot(@NotNull CLIParser.RebootContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CLIParser#reboot}.
+	 * @param ctx the parse tree
+	 */
+	void exitReboot(@NotNull CLIParser.RebootContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CLIParser#poweroff}.
+	 * @param ctx the parse tree
+	 */
+	void enterPoweroff(@NotNull CLIParser.PoweroffContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CLIParser#poweroff}.
+	 * @param ctx the parse tree
+	 */
+	void exitPoweroff(@NotNull CLIParser.PoweroffContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CLIParser#command}.
 	 * @param ctx the parse tree
@@ -150,4 +180,14 @@ public interface CLIListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitModnet(@NotNull CLIParser.ModnetContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CLIParser#shutdown}.
+	 * @param ctx the parse tree
+	 */
+	void enterShutdown(@NotNull CLIParser.ShutdownContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CLIParser#shutdown}.
+	 * @param ctx the parse tree
+	 */
+	void exitShutdown(@NotNull CLIParser.ShutdownContext ctx);
 }

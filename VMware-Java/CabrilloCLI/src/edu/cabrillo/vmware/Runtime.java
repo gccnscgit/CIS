@@ -32,6 +32,7 @@ import com.vmware.vim25.ResourceInUseFaultMsg;
 import com.vmware.vim25.RuntimeFaultFaultMsg;
 import com.vmware.vim25.TaskInProgressFaultMsg;
 import com.vmware.vim25.TimedoutFaultMsg;
+import com.vmware.vim25.ToolsUnavailableFaultMsg;
 import com.vmware.vim25.VmConfigFaultFaultMsg;
 
 import edu.cabrillo.vmware.Path.PathNotFoundException;
@@ -45,7 +46,11 @@ import edu.cabrillo.vmware.parsers.CLIParser.LinkedcloneContext;
 import edu.cabrillo.vmware.parsers.CLIParser.MigrateContext;
 import edu.cabrillo.vmware.parsers.CLIParser.MkdirContext;
 import edu.cabrillo.vmware.parsers.CLIParser.MoveContext;
+import edu.cabrillo.vmware.parsers.CLIParser.PoweroffContext;
+import edu.cabrillo.vmware.parsers.CLIParser.PoweronContext;
+import edu.cabrillo.vmware.parsers.CLIParser.RebootContext;
 import edu.cabrillo.vmware.parsers.CLIParser.RenameContext;
+import edu.cabrillo.vmware.parsers.CLIParser.ShutdownContext;
 import edu.cabrillo.vmware.parsers.CLIParser.VrlContext;
 
 public class Runtime extends CLIBaseListener {
@@ -308,5 +313,51 @@ public class Runtime extends CLIBaseListener {
 			throw new RuntimeException("Error during migrate", e);
 		}
 		
+	}
+
+	@Override
+    public void exitPoweron(@NotNull PoweronContext ctx) {
+		VRL vm = (VRL) programStack.pop();
+		try {
+			Actions.powerOnVM(vm.popMOR());
+		} catch (RuntimeFaultFaultMsg | InvalidCollectorVersionFaultMsg
+				| FileFaultFaultMsg | InsufficientResourcesFaultFaultMsg
+				| InvalidStateFaultMsg | TaskInProgressFaultMsg
+				| VmConfigFaultFaultMsg e) {
+			throw new RuntimeException("Error during power on", e);
+		}
+    }
+	
+	@Override
+	public void exitPoweroff(@NotNull PoweroffContext ctx) {
+		VRL vm = (VRL) programStack.pop();
+		try {
+			Actions.powerOffVM(vm.popMOR());
+		} catch (RuntimeFaultFaultMsg | InvalidCollectorVersionFaultMsg
+				| InvalidStateFaultMsg | TaskInProgressFaultMsg e) {
+			throw new RuntimeException("Error during power off", e);
+		}
+	}
+	
+	@Override
+	public void exitShutdown(@NotNull ShutdownContext ctx) {
+		VRL vm = (VRL) programStack.pop();
+		try {
+			Actions.shutdownVM(vm.popMOR());
+		} catch (InvalidStateFaultMsg | RuntimeFaultFaultMsg
+				| TaskInProgressFaultMsg | ToolsUnavailableFaultMsg e) {
+			throw new RuntimeException("Error during shutdown", e);
+		}
+	}
+	
+	@Override
+	public void exitReboot(@NotNull RebootContext ctx) {
+		VRL vm = (VRL) programStack.pop();
+		try {
+			Actions.rebootVM(vm.popMOR());
+		} catch (InvalidStateFaultMsg | RuntimeFaultFaultMsg
+				| TaskInProgressFaultMsg | ToolsUnavailableFaultMsg e) {
+			throw new RuntimeException("Error during reboot", e);
+		}
 	}
 }

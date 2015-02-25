@@ -59,6 +59,18 @@ Remove a netwrork adapter from a VM with the specifed name:
 Migrate a VM from one datastore to another on the same host:
     migrate <vrl:VM> <vrl:Datastore>
 
+Power on a VM:
+    poweron <vrl:VM>
+
+Power off a VM:
+    poweron <vrl:VM>
+
+Tell a guest OS to shutdown:
+    shutdown <vrl:VM>
+
+Tell a guest OS to reboot:
+    reboot <vrl:VM>
+
 Usage:
   -h | --help   : This message
   -u <username> : specify the user to login as (otherwise you'll be prompted)

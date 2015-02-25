@@ -24,6 +24,10 @@ command
 	| modnet
 	| delnet
 	| migrate
+	| poweron
+	| poweroff
+	| shutdown
+	| reboot
 	;
 
 linkedclone : 'linkedclone' vrl vrl ; 
@@ -36,6 +40,10 @@ addnet		: 'addnet' vrl STRING ;
 modnet		: 'modnet' vrl STRING ; 
 delnet		: 'delnet' vrl STRING ; 
 migrate		: 'migrate' vrl vrl ; 
+poweron		: 'poweron' vrl ; 
+poweroff	: 'poweroff' vrl ; 
+shutdown	: 'shutdown' vrl ; 
+reboot  	: 'reboot' vrl ; 
 
 vrl: RTYPE ':/' PATH ; 
 

@@ -42,6 +42,7 @@ import com.vmware.vim25.SelectionSpec;
 import com.vmware.vim25.TaskInProgressFaultMsg;
 import com.vmware.vim25.TaskInfoState;
 import com.vmware.vim25.TimedoutFaultMsg;
+import com.vmware.vim25.ToolsUnavailableFaultMsg;
 import com.vmware.vim25.TraversalSpec;
 import com.vmware.vim25.VimFaultFaultMsg;
 import com.vmware.vim25.VirtualDevice;
@@ -317,33 +318,25 @@ public class Actions {
 		waitForTask(ses.getVimPort().relocateVMTask(vm, relSpec, VirtualMachineMovePriority.DEFAULT_PRIORITY));	
 	}
 	
-	/*
-	public static void network(String vmname) throws PathNotFoundException, RuntimeFaultFaultMsg, InvalidPropertyFaultMsg, InvalidLocaleFaultMsg, InvalidLoginFaultMsg, DatatypeConfigurationException {
-		ManagedObjectReference vm = Path.pathToVm(vmname);
-        VirtualDeviceConfigSpec nicSpec = new VirtualDeviceConfigSpec();
-        VirtualEthernetCard nic = null;
-        nicSpec.setOperation(VirtualDeviceConfigSpecOperation.EDIT);
-        List<VirtualDevice> listvd =
-                ((ArrayOfVirtualDevice) SSOSession.get().getHelper().entityProps(vm,
-                        new String[]{"config.hardware.device"}).get(
-                        "config.hardware.device")).getVirtualDevice();
-        for (VirtualDevice device : listvd) {
-            if (device instanceof VirtualEthernetCard) {
-            	VirtualEthernetCard card = (VirtualEthernetCard) device; 
-            	VirtualDeviceBackingInfo fuck = card.getBacking();
-            	if (fuck instanceof VirtualEthernetCardNetworkBackingInfo) {
-                	System.out.println("Found Ethernet card: " + device.getDeviceInfo().getLabel() + 
-                			" cock: " + ((VirtualEthernetCardNetworkBackingInfo) fuck).getNetwork().getValue());
-            	}else if (fuck instanceof VirtualEthernetCardDistributedVirtualPortBackingInfo) {
-                	System.out.println("Found Ethernet card: " + device.getDeviceInfo().getLabel() + 
-                			" fuck: " + ((VirtualEthernetCardDistributedVirtualPortBackingInfo) fuck).getPort());	
-            	}
-//                if (value.equalsIgnoreCase(device.getDeviceInfo().getLabel())) {
-//                    nic = (VirtualEthernetCard) device;
-//                    break;
-            }
-        }
+    public static void powerOnVM(ManagedObjectReference vm) throws RuntimeFaultFaultMsg, InvalidCollectorVersionFaultMsg, FileFaultFaultMsg, InsufficientResourcesFaultFaultMsg, InvalidStateFaultMsg, TaskInProgressFaultMsg, VmConfigFaultFaultMsg {
+		SSOSession ses = SSOSession.get();
+		waitForTask(ses.getVimPort().powerOnVMTask(vm, null));
+    }
 
-	}
-	 */
+    public static void powerOffVM(ManagedObjectReference vm) throws RuntimeFaultFaultMsg, InvalidCollectorVersionFaultMsg, InvalidStateFaultMsg, TaskInProgressFaultMsg {
+		SSOSession ses = SSOSession.get();
+		waitForTask(ses.getVimPort().powerOffVMTask(vm));
+    }
+
+    public static void shutdownVM(ManagedObjectReference vm) throws InvalidStateFaultMsg, RuntimeFaultFaultMsg, TaskInProgressFaultMsg, ToolsUnavailableFaultMsg {
+		SSOSession ses = SSOSession.get();
+		// doesn't wait... weird.
+		ses.getVimPort().shutdownGuest(vm);
+    }
+    
+    public static void rebootVM(ManagedObjectReference vm) throws InvalidStateFaultMsg, RuntimeFaultFaultMsg, TaskInProgressFaultMsg, ToolsUnavailableFaultMsg {
+		SSOSession ses = SSOSession.get();
+		// doesn't wait... weird.
+		ses.getVimPort().rebootGuest(vm);
+    }
 }
