@@ -54,6 +54,8 @@ import com.vmware.vim25.VirtualDiskFlatVer2BackingInfo;
 import com.vmware.vim25.VirtualDiskRawDiskMappingVer1BackingInfo;
 import com.vmware.vim25.VirtualDiskSparseVer1BackingInfo;
 import com.vmware.vim25.VirtualDiskSparseVer2BackingInfo;
+import com.vmware.vim25.VirtualE1000;
+import com.vmware.vim25.VirtualE1000E;
 import com.vmware.vim25.VirtualEthernetCard;
 import com.vmware.vim25.VirtualEthernetCardNetworkBackingInfo;
 import com.vmware.vim25.VirtualHardware;
@@ -292,14 +294,30 @@ public class Actions {
 		waitForTask(ses.getVimPort().reconfigVMTask(vm, vmConfigSpec));
 	}
 
-	public static void addNetwork(ManagedObjectReference vm, String connection) throws InvalidPropertyFaultMsg, RuntimeFaultFaultMsg, ConcurrentAccessFaultMsg, DuplicateNameFaultMsg, FileFaultFaultMsg, InsufficientResourcesFaultFaultMsg, InvalidDatastoreFaultMsg, InvalidNameFaultMsg, InvalidStateFaultMsg, TaskInProgressFaultMsg, VmConfigFaultFaultMsg, InvalidCollectorVersionFaultMsg {
+	public static void addNetwork(ManagedObjectReference vm, String connection, String mac, String type) throws InvalidPropertyFaultMsg, RuntimeFaultFaultMsg, ConcurrentAccessFaultMsg, DuplicateNameFaultMsg, FileFaultFaultMsg, InsufficientResourcesFaultFaultMsg, InvalidDatastoreFaultMsg, InvalidNameFaultMsg, InvalidStateFaultMsg, TaskInProgressFaultMsg, VmConfigFaultFaultMsg, InvalidCollectorVersionFaultMsg {
 		SSOSession ses = SSOSession.get();
 		VirtualDeviceConfigSpec nicSpec = new VirtualDeviceConfigSpec();
 		nicSpec.setOperation(VirtualDeviceConfigSpecOperation.ADD);
-		VirtualEthernetCard nic = new VirtualVmxnet3();
+
+		VirtualEthernetCard nic;
+		if ("E1000E".equals(type)) {
+			nic = new VirtualE1000E();			
+		}else if ("E1000".equals(type)) {
+			nic = new VirtualE1000();
+		}else{
+			nic = new VirtualVmxnet3();			
+		}
+		
 		VirtualEthernetCardNetworkBackingInfo nicBacking = new VirtualEthernetCardNetworkBackingInfo();
 		nicBacking.setDeviceName(connection);
-		nic.setAddressType("generated");
+		
+		if (mac == null) {
+			nic.setAddressType("generated");
+		}else{
+			nic.setAddressType("manual");
+			nic.setMacAddress(mac);
+		}
+		
 		nic.setBacking(nicBacking);
 		nic.setKey(-1);
 		nicSpec.setDevice(nic);

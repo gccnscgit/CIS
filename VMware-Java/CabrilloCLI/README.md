@@ -51,7 +51,10 @@ Create a port group:
     create <vrl:Portgroup>
 
 Add a network adapter to a VM connected to the specified network:
-    addnet <vrl:VM> <String:Network Name>
+    addnet <vrl:VM> <String:Network Name> [<String:MAC Address> <String:Hardware Type>]
+
+    Supported types are "E1000E", "E1000", and "VMXNET3" (The default is VMXNET3)
+    If the optional arguments are not supplied the MAC address is chosen at random 
 
 Remove a netwrork adapter from a VM with the specifed name:
     delnet <vrl:VM> <String:Adapter Name>

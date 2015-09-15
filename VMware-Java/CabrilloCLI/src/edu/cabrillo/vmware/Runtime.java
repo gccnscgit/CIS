@@ -279,10 +279,24 @@ public class Runtime extends CLIBaseListener {
 	
 	@Override
 	public void exitAddnet(@NotNull AddnetContext ctx) {
-		String net = (String) programStack.pop();
-		VRL item = (VRL) programStack.pop();
+		// FIXME: Optional MAC address argument. This check is only valid if there's no 
+		// outer context (all commands are at the top level). If I ever implement flow 
+		// control or subroutines this check will cause corruption... and death.
+		String net, mac = null, type = null; 
+		VRL item;
+		if (programStack.size() == 2) {
+			net = (String) programStack.pop();
+			item = (VRL) programStack.pop();
+		}else if (programStack.size() == 4) {
+			type = (String) programStack.pop();
+			mac = (String) programStack.pop();
+			net = (String) programStack.pop();
+			item = (VRL) programStack.pop();			
+		}else{
+			throw new RuntimeException("Your stack is corrupt.");
+		}
 		try {
-			Actions.addNetwork(item.popMOR(), net);
+			Actions.addNetwork(item.popMOR(), net, mac, type);
 		} catch (SOAPFaultException | InvalidPropertyFaultMsg | RuntimeFaultFaultMsg | ConcurrentAccessFaultMsg | DuplicateNameFaultMsg | FileFaultFaultMsg | InsufficientResourcesFaultFaultMsg | InvalidDatastoreFaultMsg | InvalidNameFaultMsg | InvalidStateFaultMsg | TaskInProgressFaultMsg | VmConfigFaultFaultMsg | InvalidCollectorVersionFaultMsg e) {
 			throw new RuntimeException("Error during addnet", e);
 		}

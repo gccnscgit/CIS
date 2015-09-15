@@ -36,7 +36,7 @@ rename      : 'rename' vrl STRING ;
 mkdir       : 'mkdir' vrl STRING ; 
 delete      : 'delete' vrl ;
 create      : 'create' vrl ;
-addnet		: 'addnet' vrl STRING ; 
+addnet		: 'addnet' vrl STRING (STRING STRING)? ; 
 modnet		: 'modnet' vrl STRING ; 
 delnet		: 'delnet' vrl STRING ; 
 migrate		: 'migrate' vrl vrl ; 
