@@ -13,12 +13,16 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.gnu.readline.Readline;
 import org.gnu.readline.ReadlineLibrary;
 
+import com.vmware.sso.client.utils.Utils;
+
 import edu.cabrillo.vmware.parsers.CLILexer;
 import edu.cabrillo.vmware.parsers.CLIParser;
 import edu.cabrillo.vmware.parsers.CLIParser.FileContext;
 
 public class Main {
 
+	private static final String x_vsp_server = "https://vcenter-6-0.cis.cabrillo.edu/sdk";
+	
 	private static void usage() {
 		System.out.println("usage: cli [-u <username>] [<script>]");
 	}
@@ -62,6 +66,16 @@ public class Main {
 		// TODO: Make a completer.
 	}
 
+	private static void connect(String username, String password) {		
+		Utils.trustAllHttpsCertificates();
+		SSOSession sess = SSOSession.get();
+		sess.setUrl(x_vsp_server);
+		sess.generate();
+		sess.setUsername(username);
+		sess.setPassword(password);
+		sess.connect();
+	}
+	
 	public static void main(String[] argv) {		
 		FileContext ctx;
 		initReadline();
@@ -95,7 +109,7 @@ public class Main {
 		}
 		
 		// Try to defer logging in as long as possible. Login is very slow...
-
+		
 		try {
 			if (args.size() == 0) {
 				try {
@@ -109,7 +123,7 @@ public class Main {
 						}
 						try {
 							ctx = parse(new ANTLRInputStream(command));
-							SSOSession.get().login(username, password);
+							connect(username, password);
 							exec(ctx);
 						} catch (RecognitionException e) {
 							System.out.println("Parse error.");
@@ -131,7 +145,7 @@ public class Main {
 					return;
 				}
 				ctx = parse(is);
-				SSOSession.get().login(username, password);
+				connect(username, password);
 				exec(ctx);
 			}else{
 				usage();
@@ -139,7 +153,7 @@ public class Main {
 			}
 		} finally {
 			try {
-				SSOSession.get().logout();
+				// SSOSession.get().logout();
 			} catch (Exception e) {
 				//ignore..
 			}				

@@ -1,11 +1,11 @@
 package com.vmware.connection.helpers.builders;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import com.vmware.vim25.ObjectSpec;
 import com.vmware.vim25.PropertyFilterSpec;
 import com.vmware.vim25.PropertySpec;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *

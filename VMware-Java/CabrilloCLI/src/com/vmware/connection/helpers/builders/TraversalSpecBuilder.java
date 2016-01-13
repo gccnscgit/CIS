@@ -1,10 +1,10 @@
 package com.vmware.connection.helpers.builders;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import com.vmware.vim25.SelectionSpec;
 import com.vmware.vim25.TraversalSpec;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *

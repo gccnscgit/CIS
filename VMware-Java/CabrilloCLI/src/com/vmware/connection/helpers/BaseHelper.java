@@ -12,26 +12,23 @@
 
 package com.vmware.connection.helpers;
 
-import edu.cabrillo.vmware.SSOSession;
+import com.vmware.connection.Connection;
+import com.vmware.vim25.ServiceContent;
+import com.vmware.vim25.VimPortType;
 
 public abstract class BaseHelper {
     final Connection connection;
 
-    public BaseHelper() {
+    public BaseHelper(final Connection connection) {
         try {
-            this.connection = SSOSession.get();
+            this.connection = connection.connect();
         } catch (Throwable t) {
             throw new HelperException(t);
         }
     }
 
     public class HelperException extends RuntimeException {
-        /**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-
-		public HelperException(Throwable cause) {
+        public HelperException(Throwable cause) {
             super(cause);
         }
     }

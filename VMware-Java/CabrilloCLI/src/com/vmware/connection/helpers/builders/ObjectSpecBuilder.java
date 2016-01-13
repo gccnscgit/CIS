@@ -1,11 +1,11 @@
 package com.vmware.connection.helpers.builders;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import com.vmware.vim25.ManagedObjectReference;
 import com.vmware.vim25.ObjectSpec;
 import com.vmware.vim25.SelectionSpec;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *

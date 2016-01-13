@@ -12,27 +12,17 @@
 
 package com.vmware.connection.helpers;
 
+import com.vmware.connection.Connection;
+import com.vmware.vim25.*;
+import org.w3c.dom.Element;
+
 import java.util.Arrays;
 import java.util.List;
 
-import com.vmware.vim25.InvalidCollectorVersionFaultMsg;
-import com.vmware.vim25.InvalidPropertyFaultMsg;
-import com.vmware.vim25.ManagedObjectReference;
-import com.vmware.vim25.ObjectSpec;
-import com.vmware.vim25.ObjectUpdate;
-import com.vmware.vim25.ObjectUpdateKind;
-import com.vmware.vim25.PropertyChange;
-import com.vmware.vim25.PropertyChangeOp;
-import com.vmware.vim25.PropertyFilterSpec;
-import com.vmware.vim25.PropertyFilterUpdate;
-import com.vmware.vim25.PropertySpec;
-import com.vmware.vim25.RuntimeFaultFaultMsg;
-import com.vmware.vim25.ServiceContent;
-import com.vmware.vim25.UpdateSet;
-import com.vmware.vim25.VimPortType;
-import com.vmware.vim25.WaitOptions;
-
 public class WaitForValues extends BaseHelper {
+    public WaitForValues(final Connection connection) {
+        super(connection);
+    }
 
     /**
      * Handle Updates for a single object. waits till expected values of
@@ -54,11 +44,12 @@ public class WaitForValues extends BaseHelper {
             throws InvalidPropertyFaultMsg, RuntimeFaultFaultMsg,
             InvalidCollectorVersionFaultMsg {
         VimPortType vimPort;
+        ManagedObjectReference filterSpecRef = null;
         ServiceContent serviceContent;
 
         try {
-            vimPort = connection.getVimPort();
-            serviceContent = connection.getServiceContent();
+            vimPort = connection.connect().getVimPort();
+            serviceContent = connection.connect().getServiceContent();
         } catch (Throwable cause) {
             throw new BaseHelper.HelperException(cause);
         }
@@ -67,10 +58,11 @@ public class WaitForValues extends BaseHelper {
         String version = "";
         Object[] endVals = new Object[endWaitProps.length];
         Object[] filterVals = new Object[filterProps.length];
+        String stateVal = null;
 
         PropertyFilterSpec spec = propertyFilterSpec(objmor, filterProps);
 
-        ManagedObjectReference filterSpecRef =
+        filterSpecRef =
                 vimPort.createFilter(serviceContent.getPropertyCollector(), spec,
                         true);
 
@@ -115,16 +107,47 @@ public class WaitForValues extends BaseHelper {
             for (int chgi = 0; chgi < endVals.length && !reached; chgi++) {
                 for (int vali = 0; vali < expectedVals[chgi].length && !reached; vali++) {
                     expctdval = expectedVals[chgi][vali];
-
-                    reached = expctdval.equals(endVals[chgi]) || reached;
+                    if (endVals[chgi] == null) {
+                        // Do Nothing
+                    } else if (endVals[chgi].toString().contains("val: null")) {
+                        // Due to some issue in JAX-WS De-serialization getting the information from
+                        // the nodes
+                        Element stateElement = (Element) endVals[chgi];
+                        if (stateElement != null && stateElement.getFirstChild() != null) {
+                            stateVal = stateElement.getFirstChild().getTextContent();
+                            reached = expctdval.toString().equalsIgnoreCase(stateVal) || reached;
+                        }
+                    } else {
+                        expctdval = expectedVals[chgi][vali];
+                        reached = expctdval.equals(endVals[chgi]) || reached;
+                        stateVal = "filtervals";
                 }
             }
         }
-
-        // Destroy the filter when we are done.
-        vimPort.destroyPropertyFilter(filterSpecRef);
-        return filterVals;
-    }
+        }
+            Object[] retVal = null;
+            // Destroy the filter when we are done.
+            try {
+                vimPort.destroyPropertyFilter(filterSpecRef);
+            } catch (RuntimeFaultFaultMsg e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            if (stateVal != null) {
+                if (stateVal.equalsIgnoreCase("ready")) {
+                    retVal = new Object[] { HttpNfcLeaseState.READY };
+                }
+                if (stateVal.equalsIgnoreCase("error")) {
+                    retVal = new Object[] { HttpNfcLeaseState.ERROR };
+                }
+                if (stateVal.equals("filtervals")) {
+                    retVal = filterVals;
+                }
+            } else {
+                retVal = new Object[] { HttpNfcLeaseState.ERROR };
+            }
+            return retVal;
+        }
 
     public PropertyFilterSpec propertyFilterSpec(ManagedObjectReference objmor, String[] filterProps) {
         PropertyFilterSpec spec = new PropertyFilterSpec();

@@ -56,7 +56,6 @@ import edu.cabrillo.vmware.parsers.CLIParser.VrlContext;
 public class Runtime extends CLIBaseListener {
 
 	private Stack<Object> programStack = new Stack<Object>(); 	
-	private GetMOREF objectHelper = new GetMOREF();
 
 	public static class VRL { 
 		enum Type { 
@@ -75,7 +74,7 @@ public class Runtime extends CLIBaseListener {
 
 	private ManagedObjectReference findByTypeName(ManagedObjectReference parent, String type, String name) throws RuntimeFaultFaultMsg, InvalidPropertyFaultMsg {
 		Map<String, ManagedObjectReference> objs;
-		objs = objectHelper.inFolderByType(parent, type);
+		objs = SSOSession.get().getHelper().inFolderByType(parent, type);
 		if (!objs.containsKey(name)) {
 			throw new RuntimeException("Cannot find " + type + ": " + name);
 		}

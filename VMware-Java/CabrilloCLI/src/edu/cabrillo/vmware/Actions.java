@@ -75,7 +75,7 @@ import edu.cabrillo.vmware.Path.PathNotFoundException;
 public class Actions {
 
 	private static void waitForTask(ManagedObjectReference task) throws RuntimeFaultFaultMsg, InvalidCollectorVersionFaultMsg {
-		WaitForValues waiter = new WaitForValues();
+		WaitForValues waiter = SSOSession.get().getWaiter();
 
 		// info has a property - state for state of the task
 		Object[] result;

@@ -10,7 +10,7 @@
  * NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-package com.vmware.connection.helpers;
+package com.vmware.connection;
 
 import com.vmware.vim25.*;
 
@@ -26,6 +26,7 @@ import java.util.Map;
  */
 public interface Connection {
     // getters and setters
+ //   @Option(name = "url", systemProperty = "vimService.url", description = "full url to the vSphere WS SDK service")
     void setUrl(String url);
 
     String getUrl();
@@ -34,10 +35,12 @@ public interface Connection {
 
     Integer getPort();
 
+ //   @Option(name = "username", systemProperty = "connection.username", description = "username on remote system")
     void setUsername(String username);
 
     String getUsername();
 
+ //   @Option(name = "password", systemProperty = "connection.password", description = "password on remote system")
     void setPassword(String password);
 
     String getPassword();
@@ -57,10 +60,12 @@ public interface Connection {
 
     ManagedObjectReference getServiceInstanceReference();
 
+ //   @Before
     Connection connect();
 
     boolean isConnected();
 
+ //   @After
     Connection disconnect();
 
     URL getURL();

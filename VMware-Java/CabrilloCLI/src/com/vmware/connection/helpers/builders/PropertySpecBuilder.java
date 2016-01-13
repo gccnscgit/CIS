@@ -1,10 +1,10 @@
 package com.vmware.connection.helpers.builders;
 
+import com.vmware.vim25.PropertySpec;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-
-import com.vmware.vim25.PropertySpec;
 
 /**
  * a simple builder that creates a property spec

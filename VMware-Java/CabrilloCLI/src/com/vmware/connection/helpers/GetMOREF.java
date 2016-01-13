@@ -12,35 +12,20 @@
 
 package com.vmware.connection.helpers;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.vmware.connection.Connection;
+import com.vmware.connection.helpers.builders.*;
+import com.vmware.vim25.*;
 
-import com.vmware.connection.helpers.builders.ObjectSpecBuilder;
-import com.vmware.connection.helpers.builders.PropertyFilterSpecBuilder;
-import com.vmware.connection.helpers.builders.PropertySpecBuilder;
-import com.vmware.connection.helpers.builders.SelectionSpecBuilder;
-import com.vmware.connection.helpers.builders.TraversalSpecBuilder;
-import com.vmware.vim25.DynamicProperty;
-import com.vmware.vim25.InvalidPropertyFaultMsg;
-import com.vmware.vim25.ManagedObjectReference;
-import com.vmware.vim25.ObjectContent;
-import com.vmware.vim25.ObjectSpec;
-import com.vmware.vim25.PropertyFilterSpec;
-import com.vmware.vim25.PropertySpec;
-import com.vmware.vim25.RetrieveOptions;
-import com.vmware.vim25.RetrieveResult;
-import com.vmware.vim25.RuntimeFaultFaultMsg;
-import com.vmware.vim25.SelectionSpec;
-import com.vmware.vim25.ServiceContent;
-import com.vmware.vim25.TraversalSpec;
-import com.vmware.vim25.VimPortType;
+import java.util.*;
 
 public class GetMOREF extends BaseHelper {
     VimPortType vimPort;
     ServiceContent serviceContent;
+
+
+    public GetMOREF(final Connection connection) {
+        super(connection);
+    }
 
     /**
      * Initialize the helper object on the current connection at invocation time. Do not initialize on construction
@@ -48,8 +33,8 @@ public class GetMOREF extends BaseHelper {
      */
     private void init() {
         try {
-            vimPort = connection.getVimPort();
-            serviceContent = connection.getServiceContent();
+            vimPort = connection.connect().getVimPort();
+            serviceContent = connection.connect().getServiceContent();
         } catch (Throwable cause) {
             throw new HelperException(cause);
         }

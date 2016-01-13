@@ -1,5 +1,6 @@
 package com.vmware.connection.helpers;
 
+import com.vmware.connection.Connection;
 
 /**
  * Some samples make use of API only found on vCenter. Other samples
@@ -10,8 +11,12 @@ public class ApiValidator extends BaseHelper {
     public static final String VCENTER_API_TYPE = "VirtualCenter";
     public static final String HOST_API_TYPE = "HostAgent";
 
+    public ApiValidator(final Connection connection) {
+        super(connection);
+    }
+
     public String getApiType() {
-        return connection.getServiceContent().getAbout().getApiType();
+        return connection.connect().getServiceContent().getAbout().getApiType();
     }
 
     public boolean assertVCenter() {
@@ -33,10 +38,10 @@ public class ApiValidator extends BaseHelper {
     }
 
     public static boolean assertVCenter(final Connection connection) {
-        return new ApiValidator().assertVCenter();
+        return new ApiValidator(connection).assertVCenter();
     }
 
     public static boolean assertHost(final Connection connection) {
-        return new ApiValidator().assertHost();
+        return new ApiValidator(connection).assertHost();
     }
 }
