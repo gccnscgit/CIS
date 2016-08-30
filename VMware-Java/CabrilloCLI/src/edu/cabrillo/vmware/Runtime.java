@@ -195,9 +195,19 @@ public class Runtime extends CLIBaseListener {
 
 	@Override
 	public void exitLinkedclone(@NotNull LinkedcloneContext ctx) {
-		VRL dest = (VRL) programStack.pop();
-		VRL source = (VRL) programStack.pop();
-
+		VRL datastore = null;
+		VRL dest = null; 
+		VRL source = null;
+		
+		if (programStack.size() == 2) {
+			dest = (VRL) programStack.pop();
+			source = (VRL) programStack.pop();
+		}else{
+			datastore = (VRL) programStack.pop();
+			dest = (VRL) programStack.pop();
+			source = (VRL) programStack.pop();
+		}
+		
 		if (dest.type != VRL.Type.FOLDER) {
 			throw new RuntimeException("Destination must be a folder");
 		}
@@ -208,8 +218,13 @@ public class Runtime extends CLIBaseListener {
 		ManagedObjectReference d = dest.popMOR();
 		ManagedObjectReference sn = source.popMOR();
 		ManagedObjectReference sr = source.popMOR();
+		ManagedObjectReference ds = null; 
+		if (datastore != null) {
+			ds = datastore.popMOR();
+		}
+		
 		try {
-			Actions.LinkedClone(sr, sn, d);
+			Actions.LinkedClone(sr, sn, d, ds);
 		} catch (SOAPFaultException | CustomizationFaultFaultMsg | FileFaultFaultMsg
 				| InsufficientResourcesFaultFaultMsg | InvalidDatastoreFaultMsg
 				| InvalidStateFaultMsg | MigrationFaultFaultMsg

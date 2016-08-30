@@ -30,7 +30,7 @@ command
 	| reboot
 	;
 
-linkedclone : 'linkedclone' vrl vrl ; 
+linkedclone : 'linkedclone' vrl vrl vrl?; 
 move        : 'move' vrl vrl ; 
 rename      : 'rename' vrl STRING ; 
 mkdir       : 'mkdir' vrl STRING ; 

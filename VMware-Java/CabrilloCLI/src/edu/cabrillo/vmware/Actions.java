@@ -169,7 +169,7 @@ public class Actions {
 		return independenetVirtualDiskKeys;
 	}
 
-	public static void LinkedClone(ManagedObjectReference source, ManagedObjectReference snapshot, ManagedObjectReference dest) 
+	public static void LinkedClone(ManagedObjectReference source, ManagedObjectReference snapshot, ManagedObjectReference dest, ManagedObjectReference datastore) 
 			throws CustomizationFaultFaultMsg, FileFaultFaultMsg, InsufficientResourcesFaultFaultMsg, InvalidDatastoreFaultMsg, InvalidStateFaultMsg, MigrationFaultFaultMsg, RuntimeFaultFaultMsg, TaskInProgressFaultMsg, VmConfigFaultFaultMsg, InvalidLocaleFaultMsg, InvalidLoginFaultMsg, DatatypeConfigurationException, PathNotFoundException, InvalidPropertyFaultMsg, InvalidCollectorVersionFaultMsg, DuplicateNameFaultMsg, InvalidFolderFaultMsg, InvalidNameFaultMsg {
 
 		SSOSession ses = SSOSession.get();
@@ -194,6 +194,9 @@ public class Actions {
 			rSpec.getDisk().addAll(diskLocator);
 		} else {
 			rSpec.setDiskMoveType(VirtualMachineRelocateDiskMoveOptions.CREATE_NEW_CHILD_DISK_BACKING.value());	
+			if (datastore != null) {
+				rSpec.setDatastore(datastore);
+			}
 		}
 		VirtualMachineCloneSpec cloneSpec = new VirtualMachineCloneSpec();
 		cloneSpec.setPowerOn(false);
