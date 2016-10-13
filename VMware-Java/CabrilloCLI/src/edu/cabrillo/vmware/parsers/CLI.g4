@@ -21,6 +21,7 @@ command
 	| delete
 	| create
 	| addnet
+	| adddisk
 	| modnet
 	| delnet
 	| migrate
@@ -28,6 +29,7 @@ command
 	| poweroff
 	| shutdown
 	| reboot
+	| mksnap
 	;
 
 linkedclone : 'linkedclone' vrl vrl vrl?; 
@@ -37,6 +39,7 @@ mkdir       : 'mkdir' vrl STRING ;
 delete      : 'delete' vrl ;
 create      : 'create' vrl ;
 addnet		: 'addnet' vrl STRING (STRING STRING)? ; 
+adddisk		: 'adddisk' vrl STRING STRING ; 
 modnet		: 'modnet' vrl STRING ; 
 delnet		: 'delnet' vrl STRING ; 
 migrate		: 'migrate' vrl vrl ; 
@@ -44,6 +47,7 @@ poweron		: 'poweron' vrl ;
 poweroff	: 'poweroff' vrl ; 
 shutdown	: 'shutdown' vrl ; 
 reboot  	: 'reboot' vrl ; 
+mksnap  	: 'mksnap' vrl STRING STRING ; 
 
 vrl: RTYPE ':/' PATH ; 
 

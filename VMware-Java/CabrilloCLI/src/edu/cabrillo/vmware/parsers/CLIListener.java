@@ -91,6 +91,16 @@ public interface CLIListener extends ParseTreeListener {
 	 */
 	void exitCreate(@NotNull CLIParser.CreateContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link CLIParser#mksnap}.
+	 * @param ctx the parse tree
+	 */
+	void enterMksnap(@NotNull CLIParser.MksnapContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CLIParser#mksnap}.
+	 * @param ctx the parse tree
+	 */
+	void exitMksnap(@NotNull CLIParser.MksnapContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link CLIParser#addnet}.
 	 * @param ctx the parse tree
 	 */
@@ -150,6 +160,16 @@ public interface CLIListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitDelete(@NotNull CLIParser.DeleteContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CLIParser#adddisk}.
+	 * @param ctx the parse tree
+	 */
+	void enterAdddisk(@NotNull CLIParser.AdddiskContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CLIParser#adddisk}.
+	 * @param ctx the parse tree
+	 */
+	void exitAdddisk(@NotNull CLIParser.AdddiskContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CLIParser#linkedclone}.
 	 * @param ctx the parse tree

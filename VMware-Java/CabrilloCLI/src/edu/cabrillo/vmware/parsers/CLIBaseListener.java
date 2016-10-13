@@ -115,6 +115,18 @@ public class CLIBaseListener implements CLIListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterMksnap(@NotNull CLIParser.MksnapContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMksnap(@NotNull CLIParser.MksnapContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterAddnet(@NotNull CLIParser.AddnetContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -182,6 +194,18 @@ public class CLIBaseListener implements CLIListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitDelete(@NotNull CLIParser.DeleteContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAdddisk(@NotNull CLIParser.AdddiskContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAdddisk(@NotNull CLIParser.AdddiskContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

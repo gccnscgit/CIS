@@ -56,12 +56,19 @@ Add a network adapter to a VM connected to the specified network:
     Supported types are "E1000E", "E1000", and "VMXNET3" (The default is VMXNET3)
     If the optional arguments are not supplied the MAC address is chosen at random 
 
-Remove a netwrork adapter from a VM with the specifed name:
+Remove a network adapter from a VM with the specifed name:
     delnet <vrl:VM> <String:Adapter Name>
 
 Migrate a VM from one datastore to another on the same host:
     migrate <vrl:VM> <vrl:Datastore>
 
+Add a virtual disk to a VM:
+    addnet <vrl:VM> <String:Datastore> <String:Disk Size in GB> 
+
+	If the filename is empty the disk will be created alongside of the VM. If you 
+	want to create the file on a separate datastore the filename should look like:
+		[datastore]
+		
 Power on a VM:
     poweron <vrl:VM>
 
@@ -73,6 +80,9 @@ Tell a guest OS to shutdown:
 
 Tell a guest OS to reboot:
     reboot <vrl:VM>
+
+Take a snapshot of the VM:
+    mksnap <vrl:VM> <string:Name> <string:Description>
 
 Usage:
   -h | --help   : This message

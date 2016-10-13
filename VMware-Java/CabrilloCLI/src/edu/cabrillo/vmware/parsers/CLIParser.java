@@ -19,25 +19,25 @@ public class CLIParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__14=1, T__13=2, T__12=3, T__11=4, T__10=5, T__9=6, T__8=7, T__7=8, T__6=9, 
-		T__5=10, T__4=11, T__3=12, T__2=13, T__1=14, T__0=15, STRING=16, RTYPE=17, 
-		PATH=18, EOL=19, WS=20;
+		T__16=1, T__15=2, T__14=3, T__13=4, T__12=5, T__11=6, T__10=7, T__9=8, 
+		T__8=9, T__7=10, T__6=11, T__5=12, T__4=13, T__3=14, T__2=15, T__1=16, 
+		T__0=17, STRING=18, RTYPE=19, PATH=20, EOL=21, WS=22;
 	public static final String[] tokenNames = {
 		"<INVALID>", "'move'", "'delete'", "'shutdown'", "'poweron'", "'poweroff'", 
 		"'create'", "'modnet'", "'mkdir'", "'addnet'", "'linkedclone'", "'reboot'", 
-		"'delnet'", "'rename'", "':/'", "'migrate'", "STRING", "RTYPE", "PATH", 
-		"EOL", "WS"
+		"'mksnap'", "'delnet'", "'rename'", "'adddisk'", "':/'", "'migrate'", 
+		"STRING", "RTYPE", "PATH", "EOL", "WS"
 	};
 	public static final int
 		RULE_file = 0, RULE_line = 1, RULE_command = 2, RULE_linkedclone = 3, 
 		RULE_move = 4, RULE_rename = 5, RULE_mkdir = 6, RULE_delete = 7, RULE_create = 8, 
-		RULE_addnet = 9, RULE_modnet = 10, RULE_delnet = 11, RULE_migrate = 12, 
-		RULE_poweron = 13, RULE_poweroff = 14, RULE_shutdown = 15, RULE_reboot = 16, 
-		RULE_vrl = 17;
+		RULE_addnet = 9, RULE_adddisk = 10, RULE_modnet = 11, RULE_delnet = 12, 
+		RULE_migrate = 13, RULE_poweron = 14, RULE_poweroff = 15, RULE_shutdown = 16, 
+		RULE_reboot = 17, RULE_mksnap = 18, RULE_vrl = 19;
 	public static final String[] ruleNames = {
 		"file", "line", "command", "linkedclone", "move", "rename", "mkdir", "delete", 
-		"create", "addnet", "modnet", "delnet", "migrate", "poweron", "poweroff", 
-		"shutdown", "reboot", "vrl"
+		"create", "addnet", "adddisk", "modnet", "delnet", "migrate", "poweron", 
+		"poweroff", "shutdown", "reboot", "mksnap", "vrl"
 	};
 
 	@Override
@@ -91,20 +91,20 @@ public class CLIParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(39);
+			setState(43);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__14) | (1L << T__13) | (1L << T__12) | (1L << T__11) | (1L << T__10) | (1L << T__9) | (1L << T__8) | (1L << T__7) | (1L << T__6) | (1L << T__5) | (1L << T__4) | (1L << T__3) | (1L << T__2) | (1L << T__0) | (1L << EOL))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__16) | (1L << T__15) | (1L << T__14) | (1L << T__13) | (1L << T__12) | (1L << T__11) | (1L << T__10) | (1L << T__9) | (1L << T__8) | (1L << T__7) | (1L << T__6) | (1L << T__5) | (1L << T__4) | (1L << T__3) | (1L << T__2) | (1L << T__0) | (1L << EOL))) != 0)) {
 				{
 				{
-				setState(36); line();
+				setState(40); line();
 				}
 				}
-				setState(41);
+				setState(45);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(42); match(EOF);
+			setState(46); match(EOF);
 			}
 		}
 		catch (RecognitionException re) {
@@ -144,15 +144,15 @@ public class CLIParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(45);
+			setState(49);
 			_la = _input.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__14) | (1L << T__13) | (1L << T__12) | (1L << T__11) | (1L << T__10) | (1L << T__9) | (1L << T__8) | (1L << T__7) | (1L << T__6) | (1L << T__5) | (1L << T__4) | (1L << T__3) | (1L << T__2) | (1L << T__0))) != 0)) {
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__16) | (1L << T__15) | (1L << T__14) | (1L << T__13) | (1L << T__12) | (1L << T__11) | (1L << T__10) | (1L << T__9) | (1L << T__8) | (1L << T__7) | (1L << T__6) | (1L << T__5) | (1L << T__4) | (1L << T__3) | (1L << T__2) | (1L << T__0))) != 0)) {
 				{
-				setState(44); command();
+				setState(48); command();
 				}
 			}
 
-			setState(47); match(EOL);
+			setState(51); match(EOL);
 			}
 		}
 		catch (RecognitionException re) {
@@ -170,17 +170,20 @@ public class CLIParser extends Parser {
 		public RenameContext rename() {
 			return getRuleContext(RenameContext.class,0);
 		}
-		public ModnetContext modnet() {
-			return getRuleContext(ModnetContext.class,0);
-		}
 		public PoweroffContext poweroff() {
 			return getRuleContext(PoweroffContext.class,0);
+		}
+		public ModnetContext modnet() {
+			return getRuleContext(ModnetContext.class,0);
 		}
 		public MkdirContext mkdir() {
 			return getRuleContext(MkdirContext.class,0);
 		}
 		public ShutdownContext shutdown() {
 			return getRuleContext(ShutdownContext.class,0);
+		}
+		public AdddiskContext adddisk() {
+			return getRuleContext(AdddiskContext.class,0);
 		}
 		public MigrateContext migrate() {
 			return getRuleContext(MigrateContext.class,0);
@@ -190,6 +193,9 @@ public class CLIParser extends Parser {
 		}
 		public DelnetContext delnet() {
 			return getRuleContext(DelnetContext.class,0);
+		}
+		public MksnapContext mksnap() {
+			return getRuleContext(MksnapContext.class,0);
 		}
 		public CreateContext create() {
 			return getRuleContext(CreateContext.class,0);
@@ -227,90 +233,102 @@ public class CLIParser extends Parser {
 		CommandContext _localctx = new CommandContext(_ctx, getState());
 		enterRule(_localctx, 4, RULE_command);
 		try {
-			setState(63);
+			setState(69);
 			switch (_input.LA(1)) {
-			case T__5:
+			case T__7:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(49); linkedclone();
+				setState(53); linkedclone();
 				}
 				break;
-			case T__14:
+			case T__16:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(50); move();
-				}
-				break;
-			case T__2:
-				enterOuterAlt(_localctx, 3);
-				{
-				setState(51); rename();
-				}
-				break;
-			case T__7:
-				enterOuterAlt(_localctx, 4);
-				{
-				setState(52); mkdir();
-				}
-				break;
-			case T__13:
-				enterOuterAlt(_localctx, 5);
-				{
-				setState(53); delete();
-				}
-				break;
-			case T__9:
-				enterOuterAlt(_localctx, 6);
-				{
-				setState(54); create();
-				}
-				break;
-			case T__6:
-				enterOuterAlt(_localctx, 7);
-				{
-				setState(55); addnet();
-				}
-				break;
-			case T__8:
-				enterOuterAlt(_localctx, 8);
-				{
-				setState(56); modnet();
+				setState(54); move();
 				}
 				break;
 			case T__3:
-				enterOuterAlt(_localctx, 9);
+				enterOuterAlt(_localctx, 3);
 				{
-				setState(57); delnet();
+				setState(55); rename();
 				}
 				break;
-			case T__0:
-				enterOuterAlt(_localctx, 10);
+			case T__9:
+				enterOuterAlt(_localctx, 4);
 				{
-				setState(58); migrate();
+				setState(56); mkdir();
+				}
+				break;
+			case T__15:
+				enterOuterAlt(_localctx, 5);
+				{
+				setState(57); delete();
 				}
 				break;
 			case T__11:
-				enterOuterAlt(_localctx, 11);
+				enterOuterAlt(_localctx, 6);
 				{
-				setState(59); poweron();
+				setState(58); create();
+				}
+				break;
+			case T__8:
+				enterOuterAlt(_localctx, 7);
+				{
+				setState(59); addnet();
+				}
+				break;
+			case T__2:
+				enterOuterAlt(_localctx, 8);
+				{
+				setState(60); adddisk();
 				}
 				break;
 			case T__10:
+				enterOuterAlt(_localctx, 9);
+				{
+				setState(61); modnet();
+				}
+				break;
+			case T__4:
+				enterOuterAlt(_localctx, 10);
+				{
+				setState(62); delnet();
+				}
+				break;
+			case T__0:
+				enterOuterAlt(_localctx, 11);
+				{
+				setState(63); migrate();
+				}
+				break;
+			case T__13:
 				enterOuterAlt(_localctx, 12);
 				{
-				setState(60); poweroff();
+				setState(64); poweron();
 				}
 				break;
 			case T__12:
 				enterOuterAlt(_localctx, 13);
 				{
-				setState(61); shutdown();
+				setState(65); poweroff();
 				}
 				break;
-			case T__4:
+			case T__14:
 				enterOuterAlt(_localctx, 14);
 				{
-				setState(62); reboot();
+				setState(66); shutdown();
+				}
+				break;
+			case T__6:
+				enterOuterAlt(_localctx, 15);
+				{
+				setState(67); reboot();
+				}
+				break;
+			case T__5:
+				enterOuterAlt(_localctx, 16);
+				{
+				setState(68); mksnap();
 				}
 				break;
 			default:
@@ -356,14 +374,14 @@ public class CLIParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(65); match(T__5);
-			setState(66); vrl();
-			setState(67); vrl();
-			setState(69);
+			setState(71); match(T__7);
+			setState(72); vrl();
+			setState(73); vrl();
+			setState(75);
 			_la = _input.LA(1);
 			if (_la==RTYPE) {
 				{
-				setState(68); vrl();
+				setState(74); vrl();
 				}
 			}
 
@@ -407,9 +425,9 @@ public class CLIParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(71); match(T__14);
-			setState(72); vrl();
-			setState(73); vrl();
+			setState(77); match(T__16);
+			setState(78); vrl();
+			setState(79); vrl();
 			}
 		}
 		catch (RecognitionException re) {
@@ -448,9 +466,9 @@ public class CLIParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(75); match(T__2);
-			setState(76); vrl();
-			setState(77); match(STRING);
+			setState(81); match(T__3);
+			setState(82); vrl();
+			setState(83); match(STRING);
 			}
 		}
 		catch (RecognitionException re) {
@@ -489,9 +507,9 @@ public class CLIParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(79); match(T__7);
-			setState(80); vrl();
-			setState(81); match(STRING);
+			setState(85); match(T__9);
+			setState(86); vrl();
+			setState(87); match(STRING);
 			}
 		}
 		catch (RecognitionException re) {
@@ -529,8 +547,8 @@ public class CLIParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(83); match(T__13);
-			setState(84); vrl();
+			setState(89); match(T__15);
+			setState(90); vrl();
 			}
 		}
 		catch (RecognitionException re) {
@@ -568,8 +586,8 @@ public class CLIParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(86); match(T__9);
-			setState(87); vrl();
+			setState(92); match(T__11);
+			setState(93); vrl();
 			}
 		}
 		catch (RecognitionException re) {
@@ -612,18 +630,63 @@ public class CLIParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(89); match(T__6);
-			setState(90); vrl();
-			setState(91); match(STRING);
-			setState(94);
+			setState(95); match(T__8);
+			setState(96); vrl();
+			setState(97); match(STRING);
+			setState(100);
 			_la = _input.LA(1);
 			if (_la==STRING) {
 				{
-				setState(92); match(STRING);
-				setState(93); match(STRING);
+				setState(98); match(STRING);
+				setState(99); match(STRING);
 				}
 			}
 
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class AdddiskContext extends ParserRuleContext {
+		public VrlContext vrl() {
+			return getRuleContext(VrlContext.class,0);
+		}
+		public TerminalNode STRING(int i) {
+			return getToken(CLIParser.STRING, i);
+		}
+		public List<TerminalNode> STRING() { return getTokens(CLIParser.STRING); }
+		public AdddiskContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_adddisk; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CLIListener ) ((CLIListener)listener).enterAdddisk(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CLIListener ) ((CLIListener)listener).exitAdddisk(this);
+		}
+	}
+
+	public final AdddiskContext adddisk() throws RecognitionException {
+		AdddiskContext _localctx = new AdddiskContext(_ctx, getState());
+		enterRule(_localctx, 20, RULE_adddisk);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(102); match(T__2);
+			setState(103); vrl();
+			setState(104); match(STRING);
+			setState(105); match(STRING);
 			}
 		}
 		catch (RecognitionException re) {
@@ -658,13 +721,13 @@ public class CLIParser extends Parser {
 
 	public final ModnetContext modnet() throws RecognitionException {
 		ModnetContext _localctx = new ModnetContext(_ctx, getState());
-		enterRule(_localctx, 20, RULE_modnet);
+		enterRule(_localctx, 22, RULE_modnet);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(96); match(T__8);
-			setState(97); vrl();
-			setState(98); match(STRING);
+			setState(107); match(T__10);
+			setState(108); vrl();
+			setState(109); match(STRING);
 			}
 		}
 		catch (RecognitionException re) {
@@ -699,13 +762,13 @@ public class CLIParser extends Parser {
 
 	public final DelnetContext delnet() throws RecognitionException {
 		DelnetContext _localctx = new DelnetContext(_ctx, getState());
-		enterRule(_localctx, 22, RULE_delnet);
+		enterRule(_localctx, 24, RULE_delnet);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(100); match(T__3);
-			setState(101); vrl();
-			setState(102); match(STRING);
+			setState(111); match(T__4);
+			setState(112); vrl();
+			setState(113); match(STRING);
 			}
 		}
 		catch (RecognitionException re) {
@@ -742,13 +805,13 @@ public class CLIParser extends Parser {
 
 	public final MigrateContext migrate() throws RecognitionException {
 		MigrateContext _localctx = new MigrateContext(_ctx, getState());
-		enterRule(_localctx, 24, RULE_migrate);
+		enterRule(_localctx, 26, RULE_migrate);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(104); match(T__0);
-			setState(105); vrl();
-			setState(106); vrl();
+			setState(115); match(T__0);
+			setState(116); vrl();
+			setState(117); vrl();
 			}
 		}
 		catch (RecognitionException re) {
@@ -782,12 +845,12 @@ public class CLIParser extends Parser {
 
 	public final PoweronContext poweron() throws RecognitionException {
 		PoweronContext _localctx = new PoweronContext(_ctx, getState());
-		enterRule(_localctx, 26, RULE_poweron);
+		enterRule(_localctx, 28, RULE_poweron);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(108); match(T__11);
-			setState(109); vrl();
+			setState(119); match(T__13);
+			setState(120); vrl();
 			}
 		}
 		catch (RecognitionException re) {
@@ -821,12 +884,12 @@ public class CLIParser extends Parser {
 
 	public final PoweroffContext poweroff() throws RecognitionException {
 		PoweroffContext _localctx = new PoweroffContext(_ctx, getState());
-		enterRule(_localctx, 28, RULE_poweroff);
+		enterRule(_localctx, 30, RULE_poweroff);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(111); match(T__10);
-			setState(112); vrl();
+			setState(122); match(T__12);
+			setState(123); vrl();
 			}
 		}
 		catch (RecognitionException re) {
@@ -860,12 +923,12 @@ public class CLIParser extends Parser {
 
 	public final ShutdownContext shutdown() throws RecognitionException {
 		ShutdownContext _localctx = new ShutdownContext(_ctx, getState());
-		enterRule(_localctx, 30, RULE_shutdown);
+		enterRule(_localctx, 32, RULE_shutdown);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(114); match(T__12);
-			setState(115); vrl();
+			setState(125); match(T__14);
+			setState(126); vrl();
 			}
 		}
 		catch (RecognitionException re) {
@@ -899,12 +962,57 @@ public class CLIParser extends Parser {
 
 	public final RebootContext reboot() throws RecognitionException {
 		RebootContext _localctx = new RebootContext(_ctx, getState());
-		enterRule(_localctx, 32, RULE_reboot);
+		enterRule(_localctx, 34, RULE_reboot);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(117); match(T__4);
-			setState(118); vrl();
+			setState(128); match(T__6);
+			setState(129); vrl();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class MksnapContext extends ParserRuleContext {
+		public VrlContext vrl() {
+			return getRuleContext(VrlContext.class,0);
+		}
+		public TerminalNode STRING(int i) {
+			return getToken(CLIParser.STRING, i);
+		}
+		public List<TerminalNode> STRING() { return getTokens(CLIParser.STRING); }
+		public MksnapContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_mksnap; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CLIListener ) ((CLIListener)listener).enterMksnap(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CLIListener ) ((CLIListener)listener).exitMksnap(this);
+		}
+	}
+
+	public final MksnapContext mksnap() throws RecognitionException {
+		MksnapContext _localctx = new MksnapContext(_ctx, getState());
+		enterRule(_localctx, 36, RULE_mksnap);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(131); match(T__5);
+			setState(132); vrl();
+			setState(133); match(STRING);
+			setState(134); match(STRING);
 			}
 		}
 		catch (RecognitionException re) {
@@ -937,13 +1045,13 @@ public class CLIParser extends Parser {
 
 	public final VrlContext vrl() throws RecognitionException {
 		VrlContext _localctx = new VrlContext(_ctx, getState());
-		enterRule(_localctx, 34, RULE_vrl);
+		enterRule(_localctx, 38, RULE_vrl);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(120); match(RTYPE);
-			setState(121); match(T__1);
-			setState(122); match(PATH);
+			setState(136); match(RTYPE);
+			setState(137); match(T__1);
+			setState(138); match(PATH);
 			}
 		}
 		catch (RecognitionException re) {
@@ -958,36 +1066,41 @@ public class CLIParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\26\177\4\2\t\2\4"+
-		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
-		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
-		"\4\23\t\23\3\2\7\2(\n\2\f\2\16\2+\13\2\3\2\3\2\3\3\5\3\60\n\3\3\3\3\3"+
-		"\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\5\4B\n\4\3\5"+
-		"\3\5\3\5\3\5\5\5H\n\5\3\6\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3\b\3\b\3\b\3\b"+
-		"\3\t\3\t\3\t\3\n\3\n\3\n\3\13\3\13\3\13\3\13\3\13\5\13a\n\13\3\f\3\f\3"+
-		"\f\3\f\3\r\3\r\3\r\3\r\3\16\3\16\3\16\3\16\3\17\3\17\3\17\3\20\3\20\3"+
-		"\20\3\21\3\21\3\21\3\22\3\22\3\22\3\23\3\23\3\23\3\23\3\23\2\2\24\2\4"+
-		"\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$\2\2}\2)\3\2\2\2\4/\3\2\2\2\6A"+
-		"\3\2\2\2\bC\3\2\2\2\nI\3\2\2\2\fM\3\2\2\2\16Q\3\2\2\2\20U\3\2\2\2\22X"+
-		"\3\2\2\2\24[\3\2\2\2\26b\3\2\2\2\30f\3\2\2\2\32j\3\2\2\2\34n\3\2\2\2\36"+
-		"q\3\2\2\2 t\3\2\2\2\"w\3\2\2\2$z\3\2\2\2&(\5\4\3\2\'&\3\2\2\2(+\3\2\2"+
-		"\2)\'\3\2\2\2)*\3\2\2\2*,\3\2\2\2+)\3\2\2\2,-\7\2\2\3-\3\3\2\2\2.\60\5"+
-		"\6\4\2/.\3\2\2\2/\60\3\2\2\2\60\61\3\2\2\2\61\62\7\25\2\2\62\5\3\2\2\2"+
-		"\63B\5\b\5\2\64B\5\n\6\2\65B\5\f\7\2\66B\5\16\b\2\67B\5\20\t\28B\5\22"+
-		"\n\29B\5\24\13\2:B\5\26\f\2;B\5\30\r\2<B\5\32\16\2=B\5\34\17\2>B\5\36"+
-		"\20\2?B\5 \21\2@B\5\"\22\2A\63\3\2\2\2A\64\3\2\2\2A\65\3\2\2\2A\66\3\2"+
-		"\2\2A\67\3\2\2\2A8\3\2\2\2A9\3\2\2\2A:\3\2\2\2A;\3\2\2\2A<\3\2\2\2A=\3"+
-		"\2\2\2A>\3\2\2\2A?\3\2\2\2A@\3\2\2\2B\7\3\2\2\2CD\7\f\2\2DE\5$\23\2EG"+
-		"\5$\23\2FH\5$\23\2GF\3\2\2\2GH\3\2\2\2H\t\3\2\2\2IJ\7\3\2\2JK\5$\23\2"+
-		"KL\5$\23\2L\13\3\2\2\2MN\7\17\2\2NO\5$\23\2OP\7\22\2\2P\r\3\2\2\2QR\7"+
-		"\n\2\2RS\5$\23\2ST\7\22\2\2T\17\3\2\2\2UV\7\4\2\2VW\5$\23\2W\21\3\2\2"+
-		"\2XY\7\b\2\2YZ\5$\23\2Z\23\3\2\2\2[\\\7\13\2\2\\]\5$\23\2]`\7\22\2\2^"+
-		"_\7\22\2\2_a\7\22\2\2`^\3\2\2\2`a\3\2\2\2a\25\3\2\2\2bc\7\t\2\2cd\5$\23"+
-		"\2de\7\22\2\2e\27\3\2\2\2fg\7\16\2\2gh\5$\23\2hi\7\22\2\2i\31\3\2\2\2"+
-		"jk\7\21\2\2kl\5$\23\2lm\5$\23\2m\33\3\2\2\2no\7\6\2\2op\5$\23\2p\35\3"+
-		"\2\2\2qr\7\7\2\2rs\5$\23\2s\37\3\2\2\2tu\7\5\2\2uv\5$\23\2v!\3\2\2\2w"+
-		"x\7\r\2\2xy\5$\23\2y#\3\2\2\2z{\7\23\2\2{|\7\20\2\2|}\7\24\2\2}%\3\2\2"+
-		"\2\7)/AG`";
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\30\u008f\4\2\t\2"+
+		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
+		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
+		"\4\23\t\23\4\24\t\24\4\25\t\25\3\2\7\2,\n\2\f\2\16\2/\13\2\3\2\3\2\3\3"+
+		"\5\3\64\n\3\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3"+
+		"\4\3\4\3\4\3\4\5\4H\n\4\3\5\3\5\3\5\3\5\5\5N\n\5\3\6\3\6\3\6\3\6\3\7\3"+
+		"\7\3\7\3\7\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3\n\3\n\3\n\3\13\3\13\3\13\3\13"+
+		"\3\13\5\13g\n\13\3\f\3\f\3\f\3\f\3\f\3\r\3\r\3\r\3\r\3\16\3\16\3\16\3"+
+		"\16\3\17\3\17\3\17\3\17\3\20\3\20\3\20\3\21\3\21\3\21\3\22\3\22\3\22\3"+
+		"\23\3\23\3\23\3\24\3\24\3\24\3\24\3\24\3\25\3\25\3\25\3\25\3\25\2\2\26"+
+		"\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(\2\2\u008d\2-\3\2\2\2\4\63"+
+		"\3\2\2\2\6G\3\2\2\2\bI\3\2\2\2\nO\3\2\2\2\fS\3\2\2\2\16W\3\2\2\2\20[\3"+
+		"\2\2\2\22^\3\2\2\2\24a\3\2\2\2\26h\3\2\2\2\30m\3\2\2\2\32q\3\2\2\2\34"+
+		"u\3\2\2\2\36y\3\2\2\2 |\3\2\2\2\"\177\3\2\2\2$\u0082\3\2\2\2&\u0085\3"+
+		"\2\2\2(\u008a\3\2\2\2*,\5\4\3\2+*\3\2\2\2,/\3\2\2\2-+\3\2\2\2-.\3\2\2"+
+		"\2.\60\3\2\2\2/-\3\2\2\2\60\61\7\2\2\3\61\3\3\2\2\2\62\64\5\6\4\2\63\62"+
+		"\3\2\2\2\63\64\3\2\2\2\64\65\3\2\2\2\65\66\7\27\2\2\66\5\3\2\2\2\67H\5"+
+		"\b\5\28H\5\n\6\29H\5\f\7\2:H\5\16\b\2;H\5\20\t\2<H\5\22\n\2=H\5\24\13"+
+		"\2>H\5\26\f\2?H\5\30\r\2@H\5\32\16\2AH\5\34\17\2BH\5\36\20\2CH\5 \21\2"+
+		"DH\5\"\22\2EH\5$\23\2FH\5&\24\2G\67\3\2\2\2G8\3\2\2\2G9\3\2\2\2G:\3\2"+
+		"\2\2G;\3\2\2\2G<\3\2\2\2G=\3\2\2\2G>\3\2\2\2G?\3\2\2\2G@\3\2\2\2GA\3\2"+
+		"\2\2GB\3\2\2\2GC\3\2\2\2GD\3\2\2\2GE\3\2\2\2GF\3\2\2\2H\7\3\2\2\2IJ\7"+
+		"\f\2\2JK\5(\25\2KM\5(\25\2LN\5(\25\2ML\3\2\2\2MN\3\2\2\2N\t\3\2\2\2OP"+
+		"\7\3\2\2PQ\5(\25\2QR\5(\25\2R\13\3\2\2\2ST\7\20\2\2TU\5(\25\2UV\7\24\2"+
+		"\2V\r\3\2\2\2WX\7\n\2\2XY\5(\25\2YZ\7\24\2\2Z\17\3\2\2\2[\\\7\4\2\2\\"+
+		"]\5(\25\2]\21\3\2\2\2^_\7\b\2\2_`\5(\25\2`\23\3\2\2\2ab\7\13\2\2bc\5("+
+		"\25\2cf\7\24\2\2de\7\24\2\2eg\7\24\2\2fd\3\2\2\2fg\3\2\2\2g\25\3\2\2\2"+
+		"hi\7\21\2\2ij\5(\25\2jk\7\24\2\2kl\7\24\2\2l\27\3\2\2\2mn\7\t\2\2no\5"+
+		"(\25\2op\7\24\2\2p\31\3\2\2\2qr\7\17\2\2rs\5(\25\2st\7\24\2\2t\33\3\2"+
+		"\2\2uv\7\23\2\2vw\5(\25\2wx\5(\25\2x\35\3\2\2\2yz\7\6\2\2z{\5(\25\2{\37"+
+		"\3\2\2\2|}\7\7\2\2}~\5(\25\2~!\3\2\2\2\177\u0080\7\5\2\2\u0080\u0081\5"+
+		"(\25\2\u0081#\3\2\2\2\u0082\u0083\7\r\2\2\u0083\u0084\5(\25\2\u0084%\3"+
+		"\2\2\2\u0085\u0086\7\16\2\2\u0086\u0087\5(\25\2\u0087\u0088\7\24\2\2\u0088"+
+		"\u0089\7\24\2\2\u0089\'\3\2\2\2\u008a\u008b\7\25\2\2\u008b\u008c\7\22"+
+		"\2\2\u008c\u008d\7\26\2\2\u008d)\3\2\2\2\7-\63GMf";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

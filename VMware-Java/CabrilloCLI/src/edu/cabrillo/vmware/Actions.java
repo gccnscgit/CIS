@@ -2,10 +2,13 @@ package edu.cabrillo.vmware;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.xml.datatype.DatatypeConfigurationException;
+
+import org.antlr.v4.runtime.misc.Pair;
 
 import com.vmware.connection.helpers.GetMOREF;
 import com.vmware.connection.helpers.WaitForValues;
@@ -39,6 +42,7 @@ import com.vmware.vim25.PropertySpec;
 import com.vmware.vim25.ResourceInUseFaultMsg;
 import com.vmware.vim25.RuntimeFaultFaultMsg;
 import com.vmware.vim25.SelectionSpec;
+import com.vmware.vim25.SnapshotFaultFaultMsg;
 import com.vmware.vim25.TaskInProgressFaultMsg;
 import com.vmware.vim25.TaskInfoState;
 import com.vmware.vim25.TimedoutFaultMsg;
@@ -47,7 +51,9 @@ import com.vmware.vim25.TraversalSpec;
 import com.vmware.vim25.VimFaultFaultMsg;
 import com.vmware.vim25.VirtualDevice;
 import com.vmware.vim25.VirtualDeviceConfigSpec;
+import com.vmware.vim25.VirtualDeviceConfigSpecFileOperation;
 import com.vmware.vim25.VirtualDeviceConfigSpecOperation;
+import com.vmware.vim25.VirtualDeviceConnectInfo;
 import com.vmware.vim25.VirtualDisk;
 import com.vmware.vim25.VirtualDiskFlatVer1BackingInfo;
 import com.vmware.vim25.VirtualDiskFlatVer2BackingInfo;
@@ -67,6 +73,7 @@ import com.vmware.vim25.VirtualMachineRelocateSpec;
 import com.vmware.vim25.VirtualMachineRelocateSpecDiskLocator;
 import com.vmware.vim25.VirtualMachineSnapshotInfo;
 import com.vmware.vim25.VirtualMachineSnapshotTree;
+import com.vmware.vim25.VirtualSCSIController;
 import com.vmware.vim25.VirtualVmxnet3;
 import com.vmware.vim25.VmConfigFaultFaultMsg;
 
@@ -331,7 +338,6 @@ public class Actions {
 		waitForTask(ses.getVimPort().reconfigVMTask(vm, vmConfigSpec));
 	}
 
-
 	public static void migrateDS(ManagedObjectReference vm, ManagedObjectReference datastore) throws RuntimeFaultFaultMsg, InvalidCollectorVersionFaultMsg, FileFaultFaultMsg, InsufficientResourcesFaultFaultMsg, InvalidDatastoreFaultMsg, InvalidStateFaultMsg, MigrationFaultFaultMsg, TimedoutFaultMsg, VmConfigFaultFaultMsg {
 		SSOSession ses = SSOSession.get();
 		VirtualMachineRelocateSpec relSpec = new VirtualMachineRelocateSpec();
@@ -360,4 +366,92 @@ public class Actions {
 		// doesn't wait... weird.
 		ses.getVimPort().rebootGuest(vm);
     }
+
+    
+    public static void addDisk(ManagedObjectReference vm, String filename, int diskSizeGB) throws InvalidPropertyFaultMsg, DuplicateNameFaultMsg, RuntimeFaultFaultMsg, TaskInProgressFaultMsg, VmConfigFaultFaultMsg, InsufficientResourcesFaultFaultMsg, InvalidDatastoreFaultMsg, FileFaultFaultMsg, ConcurrentAccessFaultMsg, InvalidStateFaultMsg, InvalidNameFaultMsg, InvalidCollectorVersionFaultMsg {
+
+        final int SCSI_SLOTS_MAX = 16; 
+        final int SCSI_RESERVE_SLOT = 7; 
+
+		SSOSession ses = SSOSession.get();
+
+    	// Find the first available controller key and first available unit number 
+        List<VirtualDevice> listvd =
+                ((ArrayOfVirtualDevice) ses.getHelper().entityProps(vm,
+                        new String[]{"config.hardware.device"}).get(
+                        "config.hardware.device")).getVirtualDevice();
+
+        Map<Integer, VirtualDevice> deviceMap = new HashMap<Integer, VirtualDevice>();
+        for (VirtualDevice virtualDevice : listvd) {
+            deviceMap.put(virtualDevice.getKey(), virtualDevice);
+        }
+
+        int controller = -1;
+        int unit = -1;
+        
+        for (VirtualDevice virtualDevice : listvd) {
+            if (virtualDevice instanceof VirtualSCSIController) {
+                VirtualSCSIController vscsic = (VirtualSCSIController) virtualDevice;
+                        
+                int[] slots = new int[SCSI_SLOTS_MAX];
+                slots[SCSI_RESERVE_SLOT] = 1;
+                List<Integer> devicelist = vscsic.getDevice();
+
+                for (Integer deviceKey : devicelist) {
+                    if (deviceMap.get(deviceKey).getUnitNumber() != null) {
+                        slots[deviceMap.get(deviceKey).getUnitNumber()] = 1;
+                    }
+                }
+                
+                for (int i = 0; i < slots.length; i++) {
+                    if (slots[i] != 1) {
+                    	controller = vscsic.getKey();
+                    	unit = i;
+                        break;
+                    }
+                }
+                if (controller != -1) {
+                    break;
+                }
+            }
+        }
+    	
+        VirtualDisk newvirtualdisk = new VirtualDisk();
+        newvirtualdisk.setControllerKey(new Integer(controller));
+        newvirtualdisk.setUnitNumber(new Integer(unit));
+        newvirtualdisk.setCapacityInKB(1024 * 1024 * diskSizeGB);
+        newvirtualdisk.setKey(-1);
+
+        VirtualDeviceConnectInfo vdci = new VirtualDeviceConnectInfo();
+        vdci.setStartConnected(true);
+        vdci.setConnected(true);
+        vdci.setAllowGuestControl(false);
+        newvirtualdisk.setConnectable(vdci);
+
+        VirtualDiskFlatVer2BackingInfo backinginfo = new VirtualDiskFlatVer2BackingInfo();
+
+        // Always create THIN disk. 
+        backinginfo.setFileName(filename);
+        backinginfo.setDiskMode("persistent");
+        backinginfo.setThinProvisioned(Boolean.TRUE);
+        backinginfo.setEagerlyScrub(Boolean.FALSE);
+        newvirtualdisk.setBacking(backinginfo);
+        
+        VirtualDeviceConfigSpec virtualdiskconfigspec = new VirtualDeviceConfigSpec();
+        virtualdiskconfigspec.setFileOperation(VirtualDeviceConfigSpecFileOperation.CREATE);
+        virtualdiskconfigspec.setOperation(VirtualDeviceConfigSpecOperation.ADD);
+        virtualdiskconfigspec.setDevice(newvirtualdisk);
+
+        // Add the disk
+        VirtualMachineConfigSpec vmConfigSpec = new VirtualMachineConfigSpec();
+		vmConfigSpec.getDeviceChange().add(virtualdiskconfigspec);
+		waitForTask(ses.getVimPort().reconfigVMTask(vm, vmConfigSpec));
+
+    }
+    
+    public static void takeSnapshot(ManagedObjectReference vm, String name, String desc) throws RuntimeFaultFaultMsg, InvalidCollectorVersionFaultMsg, FileFaultFaultMsg, InvalidNameFaultMsg, InvalidStateFaultMsg, SnapshotFaultFaultMsg, TaskInProgressFaultMsg, VmConfigFaultFaultMsg {
+		SSOSession ses = SSOSession.get();
+		waitForTask(ses.getVimPort().createSnapshotTask(vm, name, desc, false, false));
+    }
+    
 }

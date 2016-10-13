@@ -30,6 +30,7 @@ import com.vmware.vim25.MigrationFaultFaultMsg;
 import com.vmware.vim25.NotFoundFaultMsg;
 import com.vmware.vim25.ResourceInUseFaultMsg;
 import com.vmware.vim25.RuntimeFaultFaultMsg;
+import com.vmware.vim25.SnapshotFaultFaultMsg;
 import com.vmware.vim25.TaskInProgressFaultMsg;
 import com.vmware.vim25.TimedoutFaultMsg;
 import com.vmware.vim25.ToolsUnavailableFaultMsg;
@@ -38,6 +39,7 @@ import com.vmware.vim25.VmConfigFaultFaultMsg;
 import edu.cabrillo.vmware.Path.PathNotFoundException;
 import edu.cabrillo.vmware.parsers.CLIBaseListener;
 import edu.cabrillo.vmware.parsers.CLILexer;
+import edu.cabrillo.vmware.parsers.CLIParser.AdddiskContext;
 import edu.cabrillo.vmware.parsers.CLIParser.AddnetContext;
 import edu.cabrillo.vmware.parsers.CLIParser.CreateContext;
 import edu.cabrillo.vmware.parsers.CLIParser.DeleteContext;
@@ -45,6 +47,7 @@ import edu.cabrillo.vmware.parsers.CLIParser.DelnetContext;
 import edu.cabrillo.vmware.parsers.CLIParser.LinkedcloneContext;
 import edu.cabrillo.vmware.parsers.CLIParser.MigrateContext;
 import edu.cabrillo.vmware.parsers.CLIParser.MkdirContext;
+import edu.cabrillo.vmware.parsers.CLIParser.MksnapContext;
 import edu.cabrillo.vmware.parsers.CLIParser.MoveContext;
 import edu.cabrillo.vmware.parsers.CLIParser.PoweroffContext;
 import edu.cabrillo.vmware.parsers.CLIParser.PoweronContext;
@@ -328,6 +331,18 @@ public class Runtime extends CLIBaseListener {
 	}
 	
 	@Override
+	public void exitAdddisk(@NotNull AdddiskContext ctx) {
+		String size = (String) programStack.pop();
+		String filename = (String) programStack.pop();
+		VRL vm = (VRL) programStack.pop();
+		try {
+			Actions.addDisk(vm.popMOR(), filename, Integer.parseInt(size));
+		} catch (SOAPFaultException | InvalidPropertyFaultMsg | RuntimeFaultFaultMsg | ConcurrentAccessFaultMsg | DuplicateNameFaultMsg | FileFaultFaultMsg | InsufficientResourcesFaultFaultMsg | InvalidDatastoreFaultMsg | InvalidNameFaultMsg | InvalidStateFaultMsg | TaskInProgressFaultMsg | VmConfigFaultFaultMsg | InvalidCollectorVersionFaultMsg e) {
+			throw new RuntimeException("Error during addnet", e);
+		}
+	}
+
+	@Override
 	public void exitMigrate(@NotNull MigrateContext ctx) {
 		VRL datastore = (VRL) programStack.pop();
 		VRL vm = (VRL) programStack.pop();
@@ -386,6 +401,21 @@ public class Runtime extends CLIBaseListener {
 		} catch (InvalidStateFaultMsg | RuntimeFaultFaultMsg
 				| TaskInProgressFaultMsg | ToolsUnavailableFaultMsg e) {
 			throw new RuntimeException("Error during reboot", e);
+		}
+	}
+	
+	@Override
+	public void exitMksnap(@NotNull MksnapContext ctx) {
+		String desc = (String) programStack.pop();
+		String name = (String) programStack.pop();
+		VRL vm = (VRL) programStack.pop();
+		try {
+			Actions.takeSnapshot(vm.popMOR(), name, desc);
+		} catch (InvalidStateFaultMsg | RuntimeFaultFaultMsg
+				| TaskInProgressFaultMsg | InvalidCollectorVersionFaultMsg 
+				| FileFaultFaultMsg | InvalidNameFaultMsg | SnapshotFaultFaultMsg 
+				| VmConfigFaultFaultMsg e) {
+			throw new RuntimeException("Error during snapshot", e);
 		}
 	}
 }
