@@ -6,7 +6,8 @@ import com.vmware.connection.helpers.WaitForValues;
 
 public class SSOSession extends SsoConnection {
 
-	private static final String x_sso_server = "https://vcenter-6-0.cis.cabrillo.edu:7444/ims/STSService/vlab.local";
+	//private static final String x_sso_server = "https://vcentre.cis.cabrillo.edu:7444/ims/STSService/vlab.local";
+	private static final String x_sso_server = "https://vcentre.cis.cabrillo.edu/sts/STSService/vlab.local";	
 
 	private SSOSession() {
 		

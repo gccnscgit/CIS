@@ -21,8 +21,8 @@ import edu.cabrillo.vmware.parsers.CLIParser.FileContext;
 
 public class Main {
 
-	private static final String x_vsp_server = "https://vcenter-6-0.cis.cabrillo.edu/sdk";
-	
+	private static final String x_vsp_server = "https://vcentre.cis.cabrillo.edu/sdk";
+
 	private static void usage() {
 		System.out.println("usage: cli [-u <username>] [<script>]");
 	}

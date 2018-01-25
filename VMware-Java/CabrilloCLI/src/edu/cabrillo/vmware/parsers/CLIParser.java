@@ -23,10 +23,10 @@ public class CLIParser extends Parser {
 		T__8=9, T__7=10, T__6=11, T__5=12, T__4=13, T__3=14, T__2=15, T__1=16, 
 		T__0=17, STRING=18, RTYPE=19, PATH=20, EOL=21, WS=22;
 	public static final String[] tokenNames = {
-		"<INVALID>", "'move'", "'delete'", "'shutdown'", "'poweron'", "'poweroff'", 
-		"'create'", "'modnet'", "'mkdir'", "'addnet'", "'linkedclone'", "'reboot'", 
-		"'mksnap'", "'delnet'", "'rename'", "'adddisk'", "':/'", "'migrate'", 
-		"STRING", "RTYPE", "PATH", "EOL", "WS"
+		"<INVALID>", "'reboot'", "':/'", "'mkdir'", "'create'", "'modnet'", "'delnet'", 
+		"'adddisk'", "'poweron'", "'linkedclone'", "'migrate'", "'move'", "'delete'", 
+		"'mksnap'", "'rename'", "'poweroff'", "'addnet'", "'shutdown'", "STRING", 
+		"RTYPE", "PATH", "EOL", "WS"
 	};
 	public static final int
 		RULE_file = 0, RULE_line = 1, RULE_command = 2, RULE_linkedclone = 3, 
@@ -63,13 +63,13 @@ public class CLIParser extends Parser {
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 	public static class FileContext extends ParserRuleContext {
-		public TerminalNode EOF() { return getToken(CLIParser.EOF, 0); }
-		public LineContext line(int i) {
-			return getRuleContext(LineContext.class,i);
-		}
 		public List<LineContext> line() {
 			return getRuleContexts(LineContext.class);
 		}
+		public LineContext line(int i) {
+			return getRuleContext(LineContext.class,i);
+		}
+		public TerminalNode EOF() { return getToken(CLIParser.EOF, 0); }
 		public FileContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -94,7 +94,7 @@ public class CLIParser extends Parser {
 			setState(43);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__16) | (1L << T__15) | (1L << T__14) | (1L << T__13) | (1L << T__12) | (1L << T__11) | (1L << T__10) | (1L << T__9) | (1L << T__8) | (1L << T__7) | (1L << T__6) | (1L << T__5) | (1L << T__4) | (1L << T__3) | (1L << T__2) | (1L << T__0) | (1L << EOL))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__16) | (1L << T__14) | (1L << T__13) | (1L << T__12) | (1L << T__11) | (1L << T__10) | (1L << T__9) | (1L << T__8) | (1L << T__7) | (1L << T__6) | (1L << T__5) | (1L << T__4) | (1L << T__3) | (1L << T__2) | (1L << T__1) | (1L << T__0) | (1L << EOL))) != 0)) {
 				{
 				{
 				setState(40); line();
@@ -119,10 +119,10 @@ public class CLIParser extends Parser {
 	}
 
 	public static class LineContext extends ParserRuleContext {
+		public TerminalNode EOL() { return getToken(CLIParser.EOL, 0); }
 		public CommandContext command() {
 			return getRuleContext(CommandContext.class,0);
 		}
-		public TerminalNode EOL() { return getToken(CLIParser.EOL, 0); }
 		public LineContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -146,7 +146,7 @@ public class CLIParser extends Parser {
 			{
 			setState(49);
 			_la = _input.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__16) | (1L << T__15) | (1L << T__14) | (1L << T__13) | (1L << T__12) | (1L << T__11) | (1L << T__10) | (1L << T__9) | (1L << T__8) | (1L << T__7) | (1L << T__6) | (1L << T__5) | (1L << T__4) | (1L << T__3) | (1L << T__2) | (1L << T__0))) != 0)) {
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__16) | (1L << T__14) | (1L << T__13) | (1L << T__12) | (1L << T__11) | (1L << T__10) | (1L << T__9) | (1L << T__8) | (1L << T__7) | (1L << T__6) | (1L << T__5) | (1L << T__4) | (1L << T__3) | (1L << T__2) | (1L << T__1) | (1L << T__0))) != 0)) {
 				{
 				setState(48); command();
 				}
@@ -167,38 +167,29 @@ public class CLIParser extends Parser {
 	}
 
 	public static class CommandContext extends ParserRuleContext {
-		public RenameContext rename() {
-			return getRuleContext(RenameContext.class,0);
+		public CreateContext create() {
+			return getRuleContext(CreateContext.class,0);
 		}
 		public PoweroffContext poweroff() {
 			return getRuleContext(PoweroffContext.class,0);
 		}
-		public ModnetContext modnet() {
-			return getRuleContext(ModnetContext.class,0);
-		}
-		public MkdirContext mkdir() {
-			return getRuleContext(MkdirContext.class,0);
-		}
-		public ShutdownContext shutdown() {
-			return getRuleContext(ShutdownContext.class,0);
+		public PoweronContext poweron() {
+			return getRuleContext(PoweronContext.class,0);
 		}
 		public AdddiskContext adddisk() {
 			return getRuleContext(AdddiskContext.class,0);
 		}
-		public MigrateContext migrate() {
-			return getRuleContext(MigrateContext.class,0);
+		public DeleteContext delete() {
+			return getRuleContext(DeleteContext.class,0);
 		}
-		public RebootContext reboot() {
-			return getRuleContext(RebootContext.class,0);
-		}
-		public DelnetContext delnet() {
-			return getRuleContext(DelnetContext.class,0);
+		public ModnetContext modnet() {
+			return getRuleContext(ModnetContext.class,0);
 		}
 		public MksnapContext mksnap() {
 			return getRuleContext(MksnapContext.class,0);
 		}
-		public CreateContext create() {
-			return getRuleContext(CreateContext.class,0);
+		public MkdirContext mkdir() {
+			return getRuleContext(MkdirContext.class,0);
 		}
 		public LinkedcloneContext linkedclone() {
 			return getRuleContext(LinkedcloneContext.class,0);
@@ -206,14 +197,23 @@ public class CLIParser extends Parser {
 		public MoveContext move() {
 			return getRuleContext(MoveContext.class,0);
 		}
-		public PoweronContext poweron() {
-			return getRuleContext(PoweronContext.class,0);
+		public DelnetContext delnet() {
+			return getRuleContext(DelnetContext.class,0);
 		}
-		public DeleteContext delete() {
-			return getRuleContext(DeleteContext.class,0);
+		public MigrateContext migrate() {
+			return getRuleContext(MigrateContext.class,0);
 		}
 		public AddnetContext addnet() {
 			return getRuleContext(AddnetContext.class,0);
+		}
+		public ShutdownContext shutdown() {
+			return getRuleContext(ShutdownContext.class,0);
+		}
+		public RebootContext reboot() {
+			return getRuleContext(RebootContext.class,0);
+		}
+		public RenameContext rename() {
+			return getRuleContext(RenameContext.class,0);
 		}
 		public CommandContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -235,13 +235,13 @@ public class CLIParser extends Parser {
 		try {
 			setState(69);
 			switch (_input.LA(1)) {
-			case T__7:
+			case T__8:
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(53); linkedclone();
 				}
 				break;
-			case T__16:
+			case T__6:
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(54); move();
@@ -253,79 +253,79 @@ public class CLIParser extends Parser {
 				setState(55); rename();
 				}
 				break;
-			case T__9:
+			case T__14:
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(56); mkdir();
 				}
 				break;
-			case T__15:
+			case T__5:
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(57); delete();
 				}
 				break;
-			case T__11:
+			case T__13:
 				enterOuterAlt(_localctx, 6);
 				{
 				setState(58); create();
 				}
 				break;
-			case T__8:
+			case T__1:
 				enterOuterAlt(_localctx, 7);
 				{
 				setState(59); addnet();
 				}
 				break;
-			case T__2:
+			case T__10:
 				enterOuterAlt(_localctx, 8);
 				{
 				setState(60); adddisk();
 				}
 				break;
-			case T__10:
+			case T__12:
 				enterOuterAlt(_localctx, 9);
 				{
 				setState(61); modnet();
 				}
 				break;
-			case T__4:
+			case T__11:
 				enterOuterAlt(_localctx, 10);
 				{
 				setState(62); delnet();
 				}
 				break;
-			case T__0:
+			case T__7:
 				enterOuterAlt(_localctx, 11);
 				{
 				setState(63); migrate();
 				}
 				break;
-			case T__13:
+			case T__9:
 				enterOuterAlt(_localctx, 12);
 				{
 				setState(64); poweron();
 				}
 				break;
-			case T__12:
+			case T__2:
 				enterOuterAlt(_localctx, 13);
 				{
 				setState(65); poweroff();
 				}
 				break;
-			case T__14:
+			case T__0:
 				enterOuterAlt(_localctx, 14);
 				{
 				setState(66); shutdown();
 				}
 				break;
-			case T__6:
+			case T__16:
 				enterOuterAlt(_localctx, 15);
 				{
 				setState(67); reboot();
 				}
 				break;
-			case T__5:
+			case T__4:
 				enterOuterAlt(_localctx, 16);
 				{
 				setState(68); mksnap();
@@ -374,7 +374,7 @@ public class CLIParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(71); match(T__7);
+			setState(71); match(T__8);
 			setState(72); vrl();
 			setState(73); vrl();
 			setState(75);
@@ -425,7 +425,7 @@ public class CLIParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(77); match(T__16);
+			setState(77); match(T__6);
 			setState(78); vrl();
 			setState(79); vrl();
 			}
@@ -507,7 +507,7 @@ public class CLIParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(85); match(T__9);
+			setState(85); match(T__14);
 			setState(86); vrl();
 			setState(87); match(STRING);
 			}
@@ -547,7 +547,7 @@ public class CLIParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(89); match(T__15);
+			setState(89); match(T__5);
 			setState(90); vrl();
 			}
 		}
@@ -586,7 +586,7 @@ public class CLIParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(92); match(T__11);
+			setState(92); match(T__13);
 			setState(93); vrl();
 			}
 		}
@@ -602,11 +602,11 @@ public class CLIParser extends Parser {
 	}
 
 	public static class AddnetContext extends ParserRuleContext {
-		public VrlContext vrl() {
-			return getRuleContext(VrlContext.class,0);
-		}
 		public TerminalNode STRING(int i) {
 			return getToken(CLIParser.STRING, i);
+		}
+		public VrlContext vrl() {
+			return getRuleContext(VrlContext.class,0);
 		}
 		public List<TerminalNode> STRING() { return getTokens(CLIParser.STRING); }
 		public AddnetContext(ParserRuleContext parent, int invokingState) {
@@ -630,7 +630,7 @@ public class CLIParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(95); match(T__8);
+			setState(95); match(T__1);
 			setState(96); vrl();
 			setState(97); match(STRING);
 			setState(100);
@@ -656,11 +656,11 @@ public class CLIParser extends Parser {
 	}
 
 	public static class AdddiskContext extends ParserRuleContext {
-		public VrlContext vrl() {
-			return getRuleContext(VrlContext.class,0);
-		}
 		public TerminalNode STRING(int i) {
 			return getToken(CLIParser.STRING, i);
+		}
+		public VrlContext vrl() {
+			return getRuleContext(VrlContext.class,0);
 		}
 		public List<TerminalNode> STRING() { return getTokens(CLIParser.STRING); }
 		public AdddiskContext(ParserRuleContext parent, int invokingState) {
@@ -683,7 +683,7 @@ public class CLIParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(102); match(T__2);
+			setState(102); match(T__10);
 			setState(103); vrl();
 			setState(104); match(STRING);
 			setState(105); match(STRING);
@@ -725,7 +725,7 @@ public class CLIParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(107); match(T__10);
+			setState(107); match(T__12);
 			setState(108); vrl();
 			setState(109); match(STRING);
 			}
@@ -766,7 +766,7 @@ public class CLIParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(111); match(T__4);
+			setState(111); match(T__11);
 			setState(112); vrl();
 			setState(113); match(STRING);
 			}
@@ -809,7 +809,7 @@ public class CLIParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(115); match(T__0);
+			setState(115); match(T__7);
 			setState(116); vrl();
 			setState(117); vrl();
 			}
@@ -849,7 +849,7 @@ public class CLIParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(119); match(T__13);
+			setState(119); match(T__9);
 			setState(120); vrl();
 			}
 		}
@@ -888,7 +888,7 @@ public class CLIParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(122); match(T__12);
+			setState(122); match(T__2);
 			setState(123); vrl();
 			}
 		}
@@ -927,7 +927,7 @@ public class CLIParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(125); match(T__14);
+			setState(125); match(T__0);
 			setState(126); vrl();
 			}
 		}
@@ -966,7 +966,7 @@ public class CLIParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(128); match(T__6);
+			setState(128); match(T__16);
 			setState(129); vrl();
 			}
 		}
@@ -982,11 +982,11 @@ public class CLIParser extends Parser {
 	}
 
 	public static class MksnapContext extends ParserRuleContext {
-		public VrlContext vrl() {
-			return getRuleContext(VrlContext.class,0);
-		}
 		public TerminalNode STRING(int i) {
 			return getToken(CLIParser.STRING, i);
+		}
+		public VrlContext vrl() {
+			return getRuleContext(VrlContext.class,0);
 		}
 		public List<TerminalNode> STRING() { return getTokens(CLIParser.STRING); }
 		public MksnapContext(ParserRuleContext parent, int invokingState) {
@@ -1009,7 +1009,7 @@ public class CLIParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(131); match(T__5);
+			setState(131); match(T__4);
 			setState(132); vrl();
 			setState(133); match(STRING);
 			setState(134); match(STRING);
@@ -1050,7 +1050,7 @@ public class CLIParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(136); match(RTYPE);
-			setState(137); match(T__1);
+			setState(137); match(T__15);
 			setState(138); match(PATH);
 			}
 		}
@@ -1088,19 +1088,19 @@ public class CLIParser extends Parser {
 		"DH\5\"\22\2EH\5$\23\2FH\5&\24\2G\67\3\2\2\2G8\3\2\2\2G9\3\2\2\2G:\3\2"+
 		"\2\2G;\3\2\2\2G<\3\2\2\2G=\3\2\2\2G>\3\2\2\2G?\3\2\2\2G@\3\2\2\2GA\3\2"+
 		"\2\2GB\3\2\2\2GC\3\2\2\2GD\3\2\2\2GE\3\2\2\2GF\3\2\2\2H\7\3\2\2\2IJ\7"+
-		"\f\2\2JK\5(\25\2KM\5(\25\2LN\5(\25\2ML\3\2\2\2MN\3\2\2\2N\t\3\2\2\2OP"+
-		"\7\3\2\2PQ\5(\25\2QR\5(\25\2R\13\3\2\2\2ST\7\20\2\2TU\5(\25\2UV\7\24\2"+
-		"\2V\r\3\2\2\2WX\7\n\2\2XY\5(\25\2YZ\7\24\2\2Z\17\3\2\2\2[\\\7\4\2\2\\"+
-		"]\5(\25\2]\21\3\2\2\2^_\7\b\2\2_`\5(\25\2`\23\3\2\2\2ab\7\13\2\2bc\5("+
-		"\25\2cf\7\24\2\2de\7\24\2\2eg\7\24\2\2fd\3\2\2\2fg\3\2\2\2g\25\3\2\2\2"+
-		"hi\7\21\2\2ij\5(\25\2jk\7\24\2\2kl\7\24\2\2l\27\3\2\2\2mn\7\t\2\2no\5"+
-		"(\25\2op\7\24\2\2p\31\3\2\2\2qr\7\17\2\2rs\5(\25\2st\7\24\2\2t\33\3\2"+
-		"\2\2uv\7\23\2\2vw\5(\25\2wx\5(\25\2x\35\3\2\2\2yz\7\6\2\2z{\5(\25\2{\37"+
-		"\3\2\2\2|}\7\7\2\2}~\5(\25\2~!\3\2\2\2\177\u0080\7\5\2\2\u0080\u0081\5"+
-		"(\25\2\u0081#\3\2\2\2\u0082\u0083\7\r\2\2\u0083\u0084\5(\25\2\u0084%\3"+
-		"\2\2\2\u0085\u0086\7\16\2\2\u0086\u0087\5(\25\2\u0087\u0088\7\24\2\2\u0088"+
-		"\u0089\7\24\2\2\u0089\'\3\2\2\2\u008a\u008b\7\25\2\2\u008b\u008c\7\22"+
-		"\2\2\u008c\u008d\7\26\2\2\u008d)\3\2\2\2\7-\63GMf";
+		"\13\2\2JK\5(\25\2KM\5(\25\2LN\5(\25\2ML\3\2\2\2MN\3\2\2\2N\t\3\2\2\2O"+
+		"P\7\r\2\2PQ\5(\25\2QR\5(\25\2R\13\3\2\2\2ST\7\20\2\2TU\5(\25\2UV\7\24"+
+		"\2\2V\r\3\2\2\2WX\7\5\2\2XY\5(\25\2YZ\7\24\2\2Z\17\3\2\2\2[\\\7\16\2\2"+
+		"\\]\5(\25\2]\21\3\2\2\2^_\7\6\2\2_`\5(\25\2`\23\3\2\2\2ab\7\22\2\2bc\5"+
+		"(\25\2cf\7\24\2\2de\7\24\2\2eg\7\24\2\2fd\3\2\2\2fg\3\2\2\2g\25\3\2\2"+
+		"\2hi\7\t\2\2ij\5(\25\2jk\7\24\2\2kl\7\24\2\2l\27\3\2\2\2mn\7\7\2\2no\5"+
+		"(\25\2op\7\24\2\2p\31\3\2\2\2qr\7\b\2\2rs\5(\25\2st\7\24\2\2t\33\3\2\2"+
+		"\2uv\7\f\2\2vw\5(\25\2wx\5(\25\2x\35\3\2\2\2yz\7\n\2\2z{\5(\25\2{\37\3"+
+		"\2\2\2|}\7\21\2\2}~\5(\25\2~!\3\2\2\2\177\u0080\7\23\2\2\u0080\u0081\5"+
+		"(\25\2\u0081#\3\2\2\2\u0082\u0083\7\3\2\2\u0083\u0084\5(\25\2\u0084%\3"+
+		"\2\2\2\u0085\u0086\7\17\2\2\u0086\u0087\5(\25\2\u0087\u0088\7\24\2\2\u0088"+
+		"\u0089\7\24\2\2\u0089\'\3\2\2\2\u008a\u008b\7\25\2\2\u008b\u008c\7\4\2"+
+		"\2\u008c\u008d\7\26\2\2\u008d)\3\2\2\2\7-\63GMf";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
